@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,7 +55,12 @@ public class CarController : MonoBehaviour
 
     void CarAcceleration() //汽車加速功能
     {
+
+
+
         currentAcceleration = acceleration * Input.GetAxisRaw("Vertical");
+
+
 
 
         frontLeft.motorTorque = currentAcceleration;

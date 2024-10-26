@@ -23,7 +23,7 @@ public class CarTriggerZone : MonoBehaviour
     {
         if (isPlayerTrigger)
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F) && GameObject.Find("PlayerPick").GetComponent<PickController>().isHolding==false)
             {
                 carSetting.player = GameObject.Find("Player");
             }
@@ -36,6 +36,7 @@ public class CarTriggerZone : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             getOnCarText.SetActive(true);
+            
             isPlayerTrigger = true;
         }
     }

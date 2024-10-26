@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     Vector3 moveDirection;
 
 
+
     [Header("案件綁定")]
     public KeyCode jumpKey;
 
@@ -37,7 +38,7 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        rb = GetComponent<Rigidbody>();
+        rb = transform.root.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame

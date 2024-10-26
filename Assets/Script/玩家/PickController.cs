@@ -13,19 +13,21 @@ public class PickController : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField] GameObject pickObject;
-    [SerializeField] bool isHolding;
+    public bool isHolding;
     Outline hitObjectOutline;
     Collider col;
-    GameObject cam;
+    [SerializeField] GameObject cam;
+
     PlayerController playerController;
 
 
     void Start()
     {
-        playerController = GetComponent<PlayerController>();
+
+        playerController = GameObject.Find("PlayerControl").GetComponent<PlayerController>();
         cam = playerController.PlayerCam;
 
-        col = GetComponent<Collider>();
+        col = transform.root.GetComponent<Collider>();
 
     }
 
@@ -44,7 +46,7 @@ public class PickController : MonoBehaviour
         {
             if (Physics.Raycast(detcectRay, out hit, maxRayDistance, canPickLayer))
             {
-                crossHairs.color = Color.green;
+                //crossHairs.color = Color.green;
                 hitObjectOutline = hit.collider.GetComponent<Outline>();
                 hitObjectOutline.enabled = true;
             }
@@ -52,25 +54,24 @@ public class PickController : MonoBehaviour
             {
                 if (hitObjectOutline != null)
                 {
-                    hitObjectOutline.enabled=false;
-                    hitObjectOutline=null;
+                    hitObjectOutline.enabled = false;
+                    hitObjectOutline = null;
                 }
-                crossHairs.color = Color.white;
+                //crossHairs.color = Color.white;
             }
         }
         else
         {
             if (Physics.Raycast(detcectRay, out hit, maxRayDistance, placeLayer))
             {
-                crossHairs.color = Color.yellow;
+                //crossHairs.color = Color.yellow;
             }
             else
             {
-                crossHairs.color = Color.white;
+                //crossHairs.color = Color.white;
             }
         }
         Debug.DrawRay(cam.transform.position, cam.transform.forward * maxRayDistance, Color.red);
-
     }
     void PickAndPlace()
     {
@@ -89,7 +90,7 @@ public class PickController : MonoBehaviour
                     pickObject.transform.localEulerAngles = new Vector3(0, 0, 0);
                     pickObject.GetComponent<Rigidbody>().isKinematic = true;
 
-                    hitObjectOutline.enabled=false;
+                    hitObjectOutline.enabled = false;
                     Physics.IgnoreCollision(pickObject.GetComponent<Collider>(), col, true);
 
                     isHolding = true;
