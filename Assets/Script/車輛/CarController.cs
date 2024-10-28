@@ -100,11 +100,11 @@ public class CarController : MonoBehaviour
         }
         else
         {
-            if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S))
+            if (Input.GetAxisRaw("Vertical")==0) //如果沒有按下前進按鈕(預設W、S)的話，汽車會有一個100的煞車值
             {
                 currentBreakForce = 100;
             }
-            else
+            else                                //否則如果有按下其中一個就沒有煞車
             {
                 currentBreakForce = 0;
             }

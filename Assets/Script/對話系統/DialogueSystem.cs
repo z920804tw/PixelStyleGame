@@ -18,6 +18,9 @@ public class DialogueSystem : MonoBehaviour
     public GameObject[] talkPages;
 
     public GameObject playerComponet;
+    public GameObject talkCanvas;
+
+    int waitIndex=0;
 
 
     void Start()
@@ -62,6 +65,7 @@ public class DialogueSystem : MonoBehaviour
                 break;
             case TalkStatus.Wait:
                 Debug.Log("wait");
+                talkPages[waitIndex].SetActive(true);
                 break;
             case TalkStatus.End:
                 Debug.Log("end");
@@ -70,8 +74,12 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
-    public void SetTalkStatusWait()  //有選擇時，如果選擇no的話會用到
+    public void SetTalkStatusWait(int i)  //有選擇時，如果選擇no的話會用到
     {
+        CloseAllPage();
+        talkCanvas.SetActive(false);
+
+        waitIndex=i;
         talkStatus= TalkStatus.Wait;
         StartPlayerControl();
     }
