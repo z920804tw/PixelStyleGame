@@ -12,6 +12,7 @@ public class DialogueInteractionController : MonoBehaviour
     public Image crossHairs;
     public float maxRayDistance;
 
+    public GameObject TalkFont;
 
 
 
@@ -39,10 +40,12 @@ public class DialogueInteractionController : MonoBehaviour
         if (Physics.Raycast(ray, out hit, maxRayDistance, canTalkLayer))
         {
             //crossHairs.color = Color.red;
+            TalkFont.SetActive(true);
         }
         else
         {
             //crossHairs.color = Color.white;
+            TalkFont.SetActive(false);
         }
         Debug.DrawRay(cam.transform.position, cam.transform.forward * maxRayDistance, Color.red);
     }
@@ -60,9 +63,10 @@ public class DialogueInteractionController : MonoBehaviour
                 if (dialogueSystem != null)
                 {
                     dialogueSystem.TalkEvent.Invoke(); //觸發對話
-                    StopPlayerControl();
-                }
 
+                }
+                StopPlayerControl();
+                TalkFont.SetActive(false);
                 isTalking = true;
 
             }
