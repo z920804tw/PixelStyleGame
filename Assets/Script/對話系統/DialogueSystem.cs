@@ -13,25 +13,40 @@ public enum TalkStatus
 public class DialogueSystem : MonoBehaviour
 {
     // Start is called before the first frame update
+
+    [Header("事件")]
     public UnityEvent TalkEvent;
+
+    [Header("參數設定")]
     public TalkStatus talkStatus;
     public GameObject[] talkPages;
 
-    public GameObject playerComponet;
+    public DialogueList dialogueList;
+    public TextAsset textAsset;
+
     public GameObject talkCanvas;
 
-    public int currentIndex=0;
+    public int currentIndex = 0;
+
+    GameObject playerComponet;
 
 
     void Start()
     {
-        playerComponet= GameObject.Find("PlayerComponets").gameObject;
+        playerComponet = GameObject.Find("PlayerComponets").gameObject;
+        GetJsonInfo(textAsset);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
 
+    void GetJsonInfo(TextAsset textAsset)   //取得json角色對話
+    {
+        if (textAsset != null)
+        {
+            dialogueList = JsonUtility.FromJson<DialogueList>(textAsset.text); // 直接讀取 textAsset 的內容
+            
+            //Debug.Log("Dialogue loaded successfully.");
+        }
+        else { }
     }
 
     void CloseAllPage()
@@ -52,7 +67,7 @@ public class DialogueSystem : MonoBehaviour
     {
         CloseAllPage();
         StartPlayerControl();
-        talkStatus= TalkStatus.End;
+        talkStatus = TalkStatus.End;
 
     }
 
@@ -79,7 +94,7 @@ public class DialogueSystem : MonoBehaviour
     {
         CloseAllPage();
         talkCanvas.SetActive(false);
-        talkStatus= TalkStatus.Wait;
+        talkStatus = TalkStatus.Wait;
         StartPlayerControl();
     }
 

@@ -1,0 +1,26 @@
+{
+  "dialogues": [
+    {
+      "title": "talk1",
+      "characterName": "人員1",
+      "talkContent": "歡迎來到對話測試!"
+    },
+    {
+      "title": "talk2",
+      "characterName": "人員1",
+      "talkContent": "請問你身上有梨子嗎?"
+    },
+    {
+      "title": "talk3",
+      "characterName": "人員1",
+      "talkContent": "請問你身上有番茄嗎?"
+    },
+    {
+      "title": "talk4",
+      "characterName": "人員1",
+      "talkContent": "哇,謝謝你!你是個好人"
+    }
+  ]
+
+  
+}
