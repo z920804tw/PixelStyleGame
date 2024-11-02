@@ -29,7 +29,7 @@ public class DialogueInteractionController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        TalkWithTarget();
+        DetectTarget();
     }
 
     void DetectTarget()
@@ -38,38 +38,30 @@ public class DialogueInteractionController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, maxRayDistance, canTalkLayer))
         {
-            //crossHairs.color = Color.red;
             ShowHint.SetActive(true);
+            if (Input.GetMouseButtonDown(0))
+            {
+                TalkWithTarget(hit.collider.gameObject);
+            }
         }
         else
         {
-            //crossHairs.color = Color.white;
             ShowHint.SetActive(false);
+
         }
         Debug.DrawRay(cam.transform.position, cam.transform.forward * maxRayDistance, Color.red);
     }
 
-    void TalkWithTarget()
+    void TalkWithTarget(GameObject hit)
     {
-        DetectTarget();
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        DialogueSystem dialogueSystem = hit.GetComponent<DialogueSystem>();
+        if (dialogueSystem != null)
         {
-            Ray ray = new Ray(cam.transform.position, cam.transform.forward);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, maxRayDistance, canTalkLayer))
-            {
-                DialogueSystem dialogueSystem = hit.collider.gameObject.GetComponent<DialogueSystem>();
-                if (dialogueSystem != null)
-                {
-                    dialogueSystem.TalkEvent.Invoke(); //觸發對話
-
-                }
-                StopPlayerControl();
-                ShowHint.SetActive(false);
-                isTalking = true;
-
-            }
+            dialogueSystem.TalkEvent.Invoke(); //觸發對話
         }
+        StopPlayerControl();
+        ShowHint.SetActive(false);
+        isTalking = true;
     }
 
     void StopPlayerControl()

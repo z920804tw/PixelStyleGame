@@ -34,31 +34,24 @@ public class PickController : MonoBehaviour
     void Update()
     {
         DetectObject();
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (!isHolding)
-            {
-                PickObject();
-            }
-            else
-            {
-                DropObject();
-            }
-        }
     }
     void DetectObject()     //偵測可拿起物件和地板
     {
-        Ray detcectRay = new Ray(cam.transform.position, cam.transform.forward);
+        Ray ray = new Ray(cam.transform.position, cam.transform.forward);
         RaycastHit hit;
 
-        if (isHolding == false)
+        if (!isHolding)
         {
-            if (Physics.Raycast(detcectRay, out hit, maxRayDistance, canPickLayer))
+            if (Physics.Raycast(ray, out hit, maxRayDistance, canPickLayer))
             {
-                //crossHairs.color = Color.green;
                 hitObjectOutline = hit.collider.GetComponent<Outline>();
                 hitObjectOutline.enabled = true;
                 ShowHint.SetActive(true);
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    PickObject(hit.collider.gameObject);
+                }
             }
             else
             {
@@ -68,46 +61,49 @@ public class PickController : MonoBehaviour
                     hitObjectOutline = null;
                 }
                 ShowHint.SetActive(false);
-
             }
         }
+        else
+        {
+            if (Physics.Raycast(ray, out hit, maxRayDistance, placeLayer))
+            {
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    DropObject(hit);
+                }
+            }
+            
+        }
+
         Debug.DrawRay(cam.transform.position, cam.transform.forward * maxRayDistance, Color.red);
     }
 
-    void PickObject()
+    void PickObject(GameObject hit)
     {
-        Ray ray = new Ray(cam.transform.position, cam.transform.forward);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, maxRayDistance, canPickLayer))
-        {
-            pickObject = hit.collider.gameObject;
-            pickObject.transform.SetParent(handPos);
-            pickObject.transform.position = handPos.transform.position;
-            pickObject.transform.localEulerAngles = new Vector3(0, 0, 0);
-            pickObject.GetComponent<Rigidbody>().isKinematic = true;
+        pickObject = hit;
+        pickObject.transform.SetParent(handPos);
+        pickObject.transform.position = handPos.transform.position;
+        pickObject.transform.localEulerAngles = new Vector3(0, 0, 0);
+        pickObject.GetComponent<Rigidbody>().isKinematic = true;
 
-            hitObjectOutline.enabled = false;
-            Physics.IgnoreCollision(pickObject.GetComponent<Collider>(), col, true);
+        hitObjectOutline.enabled = false;
+        Physics.IgnoreCollision(pickObject.GetComponent<Collider>(), col, true);
 
-            ShowHint.SetActive(false);
-            isHolding = true;
-        }
+        ShowHint.SetActive(false);
+        isHolding = true;
+
     }
 
-    void DropObject()
+    void DropObject(RaycastHit hit)
     {
-        Ray ray = new Ray(cam.transform.position, cam.transform.forward);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, maxRayDistance, placeLayer))
-        {
-            pickObject.transform.SetParent(null);
-            pickObject.transform.position = new Vector3(hit.point.x, hit.point.y + 0.2f, hit.point.z);
-            pickObject.transform.rotation = Quaternion.identity;
-            pickObject.GetComponent<Rigidbody>().isKinematic = false;
-            Physics.IgnoreCollision(pickObject.GetComponent<Collider>(), col, false);
+        pickObject.transform.SetParent(null);
+        pickObject.transform.position = new Vector3(hit.point.x, hit.point.y + 0.2f, hit.point.z);
+        pickObject.transform.rotation = Quaternion.identity;
+        pickObject.GetComponent<Rigidbody>().isKinematic = false;
+        Physics.IgnoreCollision(pickObject.GetComponent<Collider>(), col, false);
 
-            pickObject = null;
-            isHolding = false;
-        }
+        pickObject = null;
+        isHolding = false;
+
     }
 }

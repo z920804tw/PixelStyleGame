@@ -19,6 +19,11 @@
       "title": "talk4",
       "characterName": "人員1",
       "talkContent": "哇,謝謝你!你是個好人"
+    },
+    {
+      "title": "talk5",
+      "characterName": "玩家1",
+      "talkContent": "那妳可以提供一些資訊給我嗎?"
     }
   ]
 

@@ -22,6 +22,7 @@ public class DialogueSystem : MonoBehaviour
     public GameObject[] talkPages;
 
     public DialogueList dialogueList;
+
     public TextAsset textAsset;
 
     public GameObject talkCanvas;
@@ -43,7 +44,7 @@ public class DialogueSystem : MonoBehaviour
         if (textAsset != null)
         {
             dialogueList = JsonUtility.FromJson<DialogueList>(textAsset.text); // 直接讀取 textAsset 的內容
-            
+
             //Debug.Log("Dialogue loaded successfully.");
         }
         else { }
@@ -57,11 +58,11 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
-    public void NextPage(int i)
+    public void NextPage()
     {
         CloseAllPage();
-        talkPages[i].SetActive(true);
         currentIndex++;
+        talkPages[currentIndex].SetActive(true);
     }
     public void EndTalk()
     {

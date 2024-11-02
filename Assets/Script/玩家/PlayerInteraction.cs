@@ -19,21 +19,34 @@ public class PlayerInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            PlayerInteration();
-        }
+        DetectTarget();
+
     }
 
-    void PlayerInteration()
+    void DetectTarget()
     {
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
         RaycastHit hit;
-
         if (Physics.Raycast(ray, out hit, maxRayDistance, canInteractiveLayer))
         {
-            hit.collider.GetComponent<InteractableObject>().interactionEvent.Invoke();
+            showHint.SetActive(true);
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                PlayerInteration(hit.collider.gameObject);
+            }
         }
+        else
+        {
+            //crossHairs.color = Color.white;
+            showHint.SetActive(false);
+        }
+        Debug.DrawRay(cam.transform.position, cam.transform.forward * maxRayDistance, Color.red);
+    }
+
+    void PlayerInteration(GameObject hit)
+    {
+        hit.GetComponent<InteractableObject>().interactionEvent.Invoke();
     }
 
 
