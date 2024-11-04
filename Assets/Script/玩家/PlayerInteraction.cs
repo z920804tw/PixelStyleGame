@@ -11,6 +11,22 @@ public class PlayerInteraction : MonoBehaviour
     public GameObject cam;
     public float maxRayDistance;
     public GameObject showHint;
+
+    PlayerInputAction inputActions;
+
+    private void Awake()
+    {
+        inputActions = new PlayerInputAction();
+    }
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+    private void OnDisable()
+    {
+        inputActions.Disable();
+    }
+
     void Start()
     {
         cam = GameObject.Find("PlayerControl").GetComponent<PlayerController>().PlayerCam;
@@ -31,9 +47,10 @@ public class PlayerInteraction : MonoBehaviour
         {
             showHint.SetActive(true);
 
-            if (Input.GetKeyDown(KeyCode.E))
+            if (inputActions.PlayerControl.Interaction.WasPressedThisFrame())
             {
                 PlayerInteration(hit.collider.gameObject);
+
             }
         }
         else
@@ -47,6 +64,7 @@ public class PlayerInteraction : MonoBehaviour
     void PlayerInteration(GameObject hit)
     {
         hit.GetComponent<InteractableObject>().interactionEvent.Invoke();
+        showHint.SetActive(false);
     }
 
 

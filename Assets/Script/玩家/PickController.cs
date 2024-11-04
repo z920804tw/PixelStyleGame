@@ -12,6 +12,8 @@ public class PickController : MonoBehaviour
     public GameObject ShowHint;
     public LayerMask canPickLayer, placeLayer;
 
+    PlayerInputAction inputActions;
+
 
 
     [Header("Debug")]
@@ -21,6 +23,18 @@ public class PickController : MonoBehaviour
     Outline hitObjectOutline;
     Collider col;
 
+    private void Awake()
+    {
+        inputActions = new PlayerInputAction();
+    }
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+    private void OnDisable()
+    {
+        inputActions.Disable();
+    }
 
 
     void Start()
@@ -48,7 +62,7 @@ public class PickController : MonoBehaviour
                 hitObjectOutline.enabled = true;
                 ShowHint.SetActive(true);
 
-                if (Input.GetKeyDown(KeyCode.E))
+                if (inputActions.PlayerControl.PickPlace.WasPressedThisFrame())
                 {
                     PickObject(hit.collider.gameObject);
                 }
@@ -67,12 +81,12 @@ public class PickController : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, maxRayDistance, placeLayer))
             {
-                if (Input.GetKeyDown(KeyCode.E))
+                if (inputActions.PlayerControl.PickPlace.WasPressedThisFrame())
                 {
                     DropObject(hit);
                 }
             }
-            
+
         }
 
         Debug.DrawRay(cam.transform.position, cam.transform.forward * maxRayDistance, Color.red);
@@ -87,7 +101,8 @@ public class PickController : MonoBehaviour
         pickObject.GetComponent<Rigidbody>().isKinematic = true;
 
         hitObjectOutline.enabled = false;
-        Physics.IgnoreCollision(pickObject.GetComponent<Collider>(), col, true);
+        //Physics.IgnoreCollision(pickObject.GetComponent<Collider>(), col, true);
+        pickObject.GetComponent<Collider>().enabled = false;
 
         ShowHint.SetActive(false);
         isHolding = true;
@@ -100,7 +115,8 @@ public class PickController : MonoBehaviour
         pickObject.transform.position = new Vector3(hit.point.x, hit.point.y + 0.2f, hit.point.z);
         pickObject.transform.rotation = Quaternion.identity;
         pickObject.GetComponent<Rigidbody>().isKinematic = false;
-        Physics.IgnoreCollision(pickObject.GetComponent<Collider>(), col, false);
+        //Physics.IgnoreCollision(pickObject.GetComponent<Collider>(), col, false);
+        pickObject.GetComponent<Collider>().enabled = true;
 
         pickObject = null;
         isHolding = false;

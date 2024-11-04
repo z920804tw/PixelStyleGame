@@ -31,8 +31,25 @@ public class CarController : MonoBehaviour
     Rigidbody rb;
 
     float currentAcceleration = 0;
-    float currentBreakForce = 0;
+    [SerializeField] float currentBreakForce = 0;
     float currentTurnAngle = 0;
+
+    PlayerInputAction inputActions;
+    private void Awake()
+    {
+        inputActions = new PlayerInputAction();
+    }
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+    private void OnDisable()
+    {
+        inputActions.Disable();
+    }
+
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -42,7 +59,7 @@ public class CarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        Debug.Log(inputActions.CarControl.Move.ReadValue<Vector3>());
     }
 
     void FixedUpdate()
@@ -58,10 +75,7 @@ public class CarController : MonoBehaviour
 
 
 
-        currentAcceleration = acceleration * Input.GetAxisRaw("Vertical");
-
-
-
+        currentAcceleration = acceleration * inputActions.CarControl.Move.ReadValue<Vector3>().z;
 
         frontLeft.motorTorque = currentAcceleration;
         frontRight.motorTorque = currentAcceleration;
@@ -69,11 +83,13 @@ public class CarController : MonoBehaviour
 
         LimitSpeed();
         StopCar();
+
     }
 
     void CarTurnAngel() //汽車轉向功能
     {
-        currentTurnAngle = maxTurnAngle * Input.GetAxis("Horizontal");
+        currentTurnAngle = maxTurnAngle * inputActions.CarControl.Move.ReadValue<Vector3>().x;
+
         frontLeft.steerAngle = currentTurnAngle;
         frontRight.steerAngle = currentTurnAngle;
         UpdateWheel(frontLeft, frontLeftWheel);
@@ -94,13 +110,13 @@ public class CarController : MonoBehaviour
 
     void StopCar()   //煞車功能
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (inputActions.CarControl.Break.ReadValue<float>() > 0)
         {
             currentBreakForce = breakForce;
         }
         else
         {
-            if (Input.GetAxisRaw("Vertical")==0) //如果沒有按下前進按鈕(預設W、S)的話，汽車會有一個100的煞車值
+            if (inputActions.CarControl.Move.ReadValue<Vector3>().z == 0) //如果沒有按下前進按鈕(預設W、S)的話，汽車會有一個100的煞車值
             {
                 currentBreakForce = 100;
             }

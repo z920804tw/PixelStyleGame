@@ -9,14 +9,5 @@ public class InteractableObject : MonoBehaviour
     public UnityEvent interactionEvent;
 
 
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

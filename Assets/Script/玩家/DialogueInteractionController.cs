@@ -13,13 +13,26 @@ public class DialogueInteractionController : MonoBehaviour
 
     public GameObject ShowHint;
 
-
-
-
+    PlayerInputAction inputActions;
 
     [Header("Debug")]
     public bool isTalking;
     [SerializeField] GameObject cam;
+
+
+    private void Awake()
+    {
+        inputActions = new PlayerInputAction();
+    }
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+    private void OnDisable()
+    {
+        inputActions.Disable();
+    }
+
     void Start()
     {
         PlayerController playerController = GameObject.Find("PlayerControl").GetComponent<PlayerController>();
@@ -39,7 +52,7 @@ public class DialogueInteractionController : MonoBehaviour
         if (Physics.Raycast(ray, out hit, maxRayDistance, canTalkLayer))
         {
             ShowHint.SetActive(true);
-            if (Input.GetMouseButtonDown(0))
+            if (inputActions.PlayerControl.Talk.WasPressedThisFrame())
             {
                 TalkWithTarget(hit.collider.gameObject);
             }

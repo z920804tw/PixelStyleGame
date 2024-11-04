@@ -25,20 +25,34 @@ public class PlayerController : MonoBehaviour
     Vector3 moveDirection;
 
 
-
-    [Header("案件綁定")]
-    public KeyCode jumpKey;
+    PlayerInputAction inputActions;
 
     [SerializeField] bool isGrounded;
 
 
     Rigidbody rb;
+    private void Awake()
+    {
+        inputActions=new PlayerInputAction();
+    }
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+    private void OnDisable()
+    {
+        inputActions.Disable();
+    }
     void Start()
     {
+
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
         rb = transform.root.GetComponent<Rigidbody>();
+
+
     }
 
     // Update is called once per frame
@@ -48,7 +62,7 @@ public class PlayerController : MonoBehaviour
         CheckOnGround();
         SpeedControl();
 
-        if (Input.GetKeyDown(jumpKey) && isGrounded)
+        if (inputActions.PlayerControl.Jump.WasPressedThisFrame() && isGrounded)
         {
             PlayerJump();
         }
@@ -88,8 +102,9 @@ public class PlayerController : MonoBehaviour
 
     void PlayerMovement()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
+        horizontalInput = inputActions.PlayerControl.Move.ReadValue<Vector3>().x;
+        verticalInput = inputActions.PlayerControl.Move.ReadValue<Vector3>().z;
+
 
         moveDirection = PlayerCam.transform.forward * verticalInput + PlayerCam.transform.right * horizontalInput;
 
