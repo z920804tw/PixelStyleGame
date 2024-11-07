@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
     private void Awake()
     {
-        inputActions=new PlayerInputAction();
+        inputActions = new PlayerInputAction();
     }
     private void OnEnable()
     {
@@ -110,15 +110,16 @@ public class PlayerController : MonoBehaviour
 
         moveDirection = new Vector3(moveDirection.x, 0, moveDirection.z);//限制不會往天空飛
 
+        rb.AddForce(moveDirection.normalized * moveSpeed * 2, ForceMode.Force);
+        
+        // if (isGrounded)
+        // {
 
-        if (isGrounded)
-        {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 2, ForceMode.Force);
-        }
-        else if (!isGrounded)
-        {
-            rb.AddForce(moveDirection.normalized * moveSpeed * airDrag, ForceMode.Force);
-        }
+        // }
+        // else if (!isGrounded)
+        // {
+        //     rb.AddForce(moveDirection.normalized * moveSpeed * airDrag, ForceMode.Force);
+        // }
 
     }
 

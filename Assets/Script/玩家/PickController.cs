@@ -65,6 +65,8 @@ public class PickController : MonoBehaviour
                 if (inputActions.PlayerControl.PickPlace.WasPressedThisFrame())
                 {
                     PickObject(hit.collider.gameObject);
+
+                
                 }
             }
             else
@@ -102,11 +104,10 @@ public class PickController : MonoBehaviour
 
         hitObjectOutline.enabled = false;
         //Physics.IgnoreCollision(pickObject.GetComponent<Collider>(), col, true);
-        pickObject.GetComponent<Collider>().enabled = false;
+        pickObject.GetComponent<Collider>().isTrigger = true;
 
         ShowHint.SetActive(false);
         isHolding = true;
-
     }
 
     void DropObject(RaycastHit hit)
@@ -116,7 +117,8 @@ public class PickController : MonoBehaviour
         pickObject.transform.rotation = Quaternion.identity;
         pickObject.GetComponent<Rigidbody>().isKinematic = false;
         //Physics.IgnoreCollision(pickObject.GetComponent<Collider>(), col, false);
-        pickObject.GetComponent<Collider>().enabled = true;
+        pickObject.GetComponent<Collider>().isTrigger= false;
+
 
         pickObject = null;
         isHolding = false;

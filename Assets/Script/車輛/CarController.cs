@@ -59,7 +59,7 @@ public class CarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(inputActions.CarControl.Move.ReadValue<Vector3>());
+
     }
 
     void FixedUpdate()
@@ -67,6 +67,7 @@ public class CarController : MonoBehaviour
 
         CarAcceleration();
         CarTurnAngel();
+
 
     }
 
@@ -110,6 +111,7 @@ public class CarController : MonoBehaviour
 
     void StopCar()   //煞車功能
     {
+
         if (inputActions.CarControl.Break.ReadValue<float>() > 0)
         {
             currentBreakForce = breakForce;

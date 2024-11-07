@@ -22,7 +22,7 @@ public class CarSetting : MonoBehaviour
 
 
     [Header("Debug")]
-    Collider carCol;
+    Collider[] carCols;
     Collider playerCol;
     Rigidbody rb;
     public bool inTheCar = false;
@@ -32,8 +32,11 @@ public class CarSetting : MonoBehaviour
     float yRotation;
     void Start()
     {
+        playerComponent = GameObject.Find("PlayerComponets");
+
+
         carController = GetComponent<CarController>();
-        carCol = GetComponent<BoxCollider>();
+        carCols = GetComponents<Collider>();
         rb = GetComponent<Rigidbody>();
     }
 
@@ -48,7 +51,12 @@ public class CarSetting : MonoBehaviour
                 playerComponent.SetActive(false);
 
                 playerCol = player.GetComponent<CapsuleCollider>(); //取得玩家碰撞體
-                Physics.IgnoreCollision(carCol, playerCol, true);   //玩家跟汽車的碰撞無視
+
+
+                foreach (Collider i in carCols)
+                {
+                    Physics.IgnoreCollision(i, playerCol, true);   //玩家跟汽車的碰撞無視
+                }
 
                 player.transform.SetParent(driverSeat);       //設定玩家的位置、旋轉
                 player.transform.position = driverSeat.position;
@@ -66,7 +74,7 @@ public class CarSetting : MonoBehaviour
             else
             {
                 CarViewCam();
-                if (Input.GetKeyDown(KeyCode.F) && Input.GetAxisRaw("Vertical")==0) //玩家下車
+                if (Input.GetKeyDown(KeyCode.F) && Input.GetAxisRaw("Vertical") == 0) //玩家下車
                 {
 
                     playerComponent.SetActive(true);
@@ -76,7 +84,10 @@ public class CarSetting : MonoBehaviour
                     player.transform.rotation = Quaternion.identity;
                     player.GetComponent<Rigidbody>().isKinematic = false;
 
-                    Physics.IgnoreCollision(carCol, playerCol, false);
+                    foreach (Collider i in carCols)
+                    {
+                        Physics.IgnoreCollision(i, playerCol, false);   //玩家跟汽車的碰撞無視
+                    }
 
                     player = null;
                     inTheCar = false;
