@@ -1,0 +1,15 @@
+{
+  "dialogues": [
+    {
+      "title": "talk1",
+      "characterName": "人員C",
+      "talkContent": "你已經放好貨物了嗎?"
+    },
+    {
+      "title":"talk2",
+      "characterName":"人員C",
+      "talkContent":"測試任務結束"
+    }
+  ]
+
+}

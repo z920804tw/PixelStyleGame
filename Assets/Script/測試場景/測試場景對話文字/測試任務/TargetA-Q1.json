@@ -1,0 +1,20 @@
+{
+  "dialogues": [
+    {
+      "title": "talk1",
+      "characterName": "人員A",
+      "talkContent": "你好，我是第一個任務的測試物件，這邊測試的是對話功能。"
+    },
+    {
+      "title":"talk2",
+      "characterName":"人員A",
+      "talkContent":"有時候劇情的任務會需要玩家跟某位NPC對話時，該名NPC會出現在地圖上，請找到並跟他對話。"
+    },
+    {
+      "title":"talk3",
+      "characterName":"人員A",
+      "talkContent":"現在你可以找到人員B，它的位置在右邊的任務區內!"
+    }
+  ]
+
+}

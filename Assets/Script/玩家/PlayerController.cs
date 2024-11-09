@@ -70,6 +70,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+
         PlayerMovement();
     }
     void CheckOnGround()
@@ -110,16 +111,16 @@ public class PlayerController : MonoBehaviour
 
         moveDirection = new Vector3(moveDirection.x, 0, moveDirection.z);//限制不會往天空飛
 
-        rb.AddForce(moveDirection.normalized * moveSpeed * 2, ForceMode.Force);
-        
-        // if (isGrounded)
-        // {
 
-        // }
-        // else if (!isGrounded)
-        // {
-        //     rb.AddForce(moveDirection.normalized * moveSpeed * airDrag, ForceMode.Force);
-        // }
+
+        if (isGrounded)
+        {
+            rb.AddForce(moveDirection.normalized * moveSpeed * 2, ForceMode.Force);
+        }
+        else if (!isGrounded)
+        {
+            rb.AddForce(moveDirection.normalized * moveSpeed * airDrag, ForceMode.Force);
+        }
 
     }
 

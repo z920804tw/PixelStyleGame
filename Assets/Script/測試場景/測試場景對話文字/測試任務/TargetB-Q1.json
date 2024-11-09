@@ -1,0 +1,20 @@
+{
+  "dialogues": [
+    {
+      "title": "talk1",
+      "characterName": "人員B",
+      "talkContent": "你好，我是人員B"
+    },
+    {
+      "title":"talk2",
+      "characterName":"人員B",
+      "talkContent":"現在要模擬的是給予任務的功能，我會給你一個要做的目標，請將該目標完成。"
+    },
+    {
+      "title":"talk3",
+      "characterName":"人員B",
+      "talkContent":"現在請將右邊的貨物全部都裝到貨車上。"
+    }
+  ]
+
+}

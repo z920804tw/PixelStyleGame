@@ -1,0 +1,15 @@
+{
+  "dialogues": [
+    {
+      "title": "talk1",
+      "characterName": "人員C",
+      "talkContent": "喔!你就是人員B說的負責送貨的人吧"
+    },
+    {
+      "title":"talk2",
+      "characterName":"人員C",
+      "talkContent":"請將車上的貨物放到我旁邊的地點就好了"
+    }
+  ]
+
+}

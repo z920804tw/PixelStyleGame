@@ -1,0 +1,15 @@
+{
+  "dialogues": [
+    {
+      "title": "talk1",
+      "characterName": "人員B",
+      "talkContent": "你已經裝好貨了嗎?"
+    },
+    {
+      "title":"talk2",
+      "characterName":"人員B",
+      "talkContent":"如果已經裝好貨物的話，就將貨物送達給人員C，人員C的地點在旁邊的山上。"
+    }
+  ]
+
+}

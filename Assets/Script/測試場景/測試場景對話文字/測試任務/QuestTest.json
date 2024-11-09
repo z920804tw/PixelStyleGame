@@ -1,0 +1,16 @@
+{
+  "dialogues": [
+    {
+      "title": "talk1",
+      "characterName": "人員1",
+      "talkContent": "歡迎來到任務測試!"
+    },
+    {
+      "title":"talk1",
+      "characterName":"人員1",
+      "talkContent":"準備好開始測試任務了嗎?"
+  
+    }
+  ]
+
+}

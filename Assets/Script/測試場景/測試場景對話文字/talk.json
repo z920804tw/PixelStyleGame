@@ -8,25 +8,22 @@
     {
       "title": "talk2",
       "characterName": "人員1",
-      "talkContent": "請問你身上有蘋果嗎?"
+      "talkContent": "在這邊我會講述一些事情或者是問玩家一些事情"
     },
     {
       "title": "talk3",
       "characterName": "人員1",
-      "talkContent": "請問你身上有香蕉嗎?"
+      "talkContent": "這是詢問的對話，請問你身上有香蕉嗎?"
     },
     {
       "title": "talk4",
       "characterName": "人員1",
       "talkContent": "哇,謝謝你!你是個好人"
-    },
-    {
-      "title": "talk5",
-      "characterName": "玩家1",
-      "talkContent": "那妳可以提供一些資訊給我嗎?"
     }
     
   ]
+
+
 
   
 }
