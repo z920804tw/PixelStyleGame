@@ -103,10 +103,10 @@ public class PlayerController : MonoBehaviour
         RaycastHit hitLower;
         if (Physics.Raycast(ray, out hitLower, 0.2f, groundLayer))              //判斷有最低限制的設限有沒有打到東西
         {
-
-            Vector3 roundedNormal = new Vector3(Mathf.Round(hitLower.normal.x) //檢查是不是走到斜坡，用到四捨五入
-            , Mathf.Round(hitLower.normal.y),
-            Mathf.Round(hitLower.normal.z));
+            
+            Vector3 roundedNormal = new Vector3(Mathf.Floor(hitLower.normal.x) //檢查是不是走到斜坡，用到四捨五入
+            , Mathf.CeilToInt(hitLower.normal.y),
+            Mathf.Floor(hitLower.normal.z));
             Debug.Log(roundedNormal);
 
             if (roundedNormal != Vector3.up)
