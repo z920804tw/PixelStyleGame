@@ -18,8 +18,16 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public float groundDrag;
     public float airDrag;
+    [Header("玩家參數設定")]
     public float playerHeight;
     public LayerMask groundLayer;
+    [Header("玩家跨越設定")]
+    [SerializeField] GameObject maxCrossHeight;
+    [SerializeField] GameObject minCrossHeight;
+    [SerializeField] float stepMaxHeight;
+    [SerializeField] float stepMinHeight;
+    [SerializeField] float stepSmooth;
+
     float horizontalInput;
     float verticalInput;
     Vector3 moveDirection;
@@ -34,6 +42,8 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         inputActions = new PlayerInputAction();
+        maxCrossHeight.transform.localPosition = new Vector3(0, stepMaxHeight, 0);
+        minCrossHeight.transform.localPosition = new Vector3(0, stepMinHeight, 0);
     }
     private void OnEnable()
     {
@@ -70,8 +80,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-
         PlayerMovement();
+        CheckCanAcross();
     }
     void CheckOnGround()
     {
@@ -87,7 +97,30 @@ public class PlayerController : MonoBehaviour
             rb.drag = 0;
         }
     }
+    void CheckCanAcross()
+    {
+        Ray ray = new Ray(minCrossHeight.transform.position, moveDirection.normalized);
+        RaycastHit hitLower;
+        if (Physics.Raycast(ray, out hitLower, 0.2f, groundLayer))              //判斷有最低限制的設限有沒有打到東西
+        {
 
+            Vector3 roundedNormal = new Vector3(Mathf.Round(hitLower.normal.x) //檢查是不是走到斜坡，用到四捨五入
+            , Mathf.Round(hitLower.normal.y),
+            Mathf.Round(hitLower.normal.z));
+            Debug.Log(roundedNormal);
+
+            if (roundedNormal != Vector3.up)
+            {
+                Ray ray1 = new Ray(maxCrossHeight.transform.position, moveDirection.normalized);    //會再判斷最高上限的設限有沒有打到物件
+                RaycastHit hitUpper;                                                                //如果有打到就無法走上去,反之就可以
+                if (!Physics.Raycast(ray1, out hitUpper, 0.2f, groundLayer))
+                {
+                    rb.position += new Vector3(0, stepSmooth, 0);
+                }
+
+            }
+        }
+    }
     void RotateCam()
     {
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
@@ -116,6 +149,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 2, ForceMode.Force);
+
         }
         else if (!isGrounded)
         {
