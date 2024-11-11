@@ -32,7 +32,6 @@ public class PlayerController : MonoBehaviour
     float verticalInput;
     Vector3 moveDirection;
 
-
     PlayerInputAction inputActions;
 
     [SerializeField] bool isGrounded;
@@ -41,6 +40,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
     private void Awake()
     {
+        
         inputActions = new PlayerInputAction();
         maxCrossHeight.transform.localPosition = new Vector3(0, stepMaxHeight, 0);
         minCrossHeight.transform.localPosition = new Vector3(0, stepMinHeight, 0);
@@ -76,6 +76,7 @@ public class PlayerController : MonoBehaviour
         {
             PlayerJump();
         }
+
     }
 
     private void FixedUpdate()
@@ -85,7 +86,7 @@ public class PlayerController : MonoBehaviour
     }
     void CheckOnGround()
     {
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight, groundLayer);
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight);
         Debug.DrawRay(transform.position, Vector3.down * playerHeight, Color.red);
         if (isGrounded)
         {
@@ -101,10 +102,10 @@ public class PlayerController : MonoBehaviour
     {
         Ray ray = new Ray(minCrossHeight.transform.position, moveDirection.normalized);
         RaycastHit hitLower;
-        if (Physics.Raycast(ray, out hitLower, 0.2f, groundLayer))              //判斷有最低限制的設限有沒有打到東西
+        if (Physics.Raycast(ray, out hitLower, 0.2f))              //判斷有最低限制的設限有沒有打到東西
         {
-            
-            Vector3 roundedNormal = new Vector3(Mathf.Floor(hitLower.normal.x) //檢查是不是走到斜坡，用到四捨五入
+            Debug.Log(hitLower.normal.y);
+            Vector3 roundedNormal = new Vector3(Mathf.Floor(hitLower.normal.x) //檢查是不是走到斜坡
             , Mathf.CeilToInt(hitLower.normal.y),
             Mathf.Floor(hitLower.normal.z));
             Debug.Log(roundedNormal);
@@ -113,7 +114,7 @@ public class PlayerController : MonoBehaviour
             {
                 Ray ray1 = new Ray(maxCrossHeight.transform.position, moveDirection.normalized);    //會再判斷最高上限的設限有沒有打到物件
                 RaycastHit hitUpper;                                                                //如果有打到就無法走上去,反之就可以
-                if (!Physics.Raycast(ray1, out hitUpper, 0.2f, groundLayer))
+                if (!Physics.Raycast(ray1, out hitUpper, 0.2f))
                 {
                     rb.position += new Vector3(0, stepSmooth, 0);
                 }
