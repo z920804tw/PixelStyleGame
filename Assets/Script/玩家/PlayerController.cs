@@ -33,14 +33,16 @@ public class PlayerController : MonoBehaviour
     Vector3 moveDirection;
 
     PlayerInputAction inputActions;
-
+    [Header("Debug")]
+    public bool isIncar;
     [SerializeField] bool isGrounded;
+
 
 
     Rigidbody rb;
     private void Awake()
     {
-        
+
         inputActions = new PlayerInputAction();
         maxCrossHeight.transform.localPosition = new Vector3(0, stepMaxHeight, 0);
         minCrossHeight.transform.localPosition = new Vector3(0, stepMinHeight, 0);
@@ -102,7 +104,7 @@ public class PlayerController : MonoBehaviour
     {
         Ray ray = new Ray(minCrossHeight.transform.position, moveDirection.normalized);
         RaycastHit hitLower;
-        if (Physics.Raycast(ray, out hitLower, 0.2f))              //判斷有最低限制的設限有沒有打到東西
+        if (Physics.Raycast(ray, out hitLower, 0.2f, groundLayer))              //判斷有最低限制的設限有沒有打到東西
         {
             Debug.Log(hitLower.normal.y);
             Vector3 roundedNormal = new Vector3(Mathf.Floor(hitLower.normal.x) //檢查是不是走到斜坡

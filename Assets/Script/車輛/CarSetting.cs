@@ -8,6 +8,7 @@ public class CarSetting : MonoBehaviour
     [Header("車輛設定")]
     public GameObject player;
     public GameObject playerComponent;
+    PlayerController playerController;
     public Camera carCam;
     public Transform driverSeat;
     public Transform carTriggerZone;
@@ -33,7 +34,7 @@ public class CarSetting : MonoBehaviour
     void Start()
     {
         playerComponent = GameObject.Find("PlayerComponets");
-
+        playerController = GameObject.Find("PlayerControl").GetComponent<PlayerController>();
 
         carController = GetComponent<CarController>();
         carCols = GetComponents<Collider>();
@@ -61,14 +62,16 @@ public class CarSetting : MonoBehaviour
                 player.transform.SetParent(driverSeat);       //設定玩家的位置、旋轉
                 player.transform.position = driverSeat.position;
                 player.transform.rotation = driverSeat.rotation;
-
                 player.GetComponent<Rigidbody>().isKinematic = true; //關閉玩家的運動行為
 
                 carCam.transform.localRotation = Quaternion.Euler(0, 0, 0);  //攝影機歸位
-
                 carController.enabled = true;       //汽車操控打開
 
+
+
+
                 inTheCar = true;
+                playerController.isIncar = inTheCar;
 
             }
             else
@@ -91,7 +94,7 @@ public class CarSetting : MonoBehaviour
 
                     player = null;
                     inTheCar = false;
-
+                    playerController.isIncar = inTheCar;
 
                     carController.enabled = false;
 
