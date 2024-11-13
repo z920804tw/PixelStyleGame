@@ -26,6 +26,7 @@ public class CarController : MonoBehaviour
     public float maxTurnAngle;
     public float maxSpeed;
 
+
     public Vector3 centerOfMass;
 
     Rigidbody rb;
@@ -59,7 +60,7 @@ public class CarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        // Debug.Log(rb.velocity.magnitude );
     }
 
     void FixedUpdate()
@@ -70,6 +71,7 @@ public class CarController : MonoBehaviour
 
 
     }
+
 
     void CarAcceleration() //汽車加速功能
     {
@@ -142,6 +144,8 @@ public class CarController : MonoBehaviour
         {
             Vector3 limitSpeed = currentSpeed.normalized * maxSpeed;
             rb.velocity = new Vector3(limitSpeed.x, rb.velocity.y, limitSpeed.z);
+
         }
     }
+
 }
