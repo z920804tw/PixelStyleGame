@@ -13,7 +13,7 @@ public class EnemySetting : MonoBehaviour
     PlayerController playerController;
     public int enemyHp;
     float distance;
-    [SerializeField] bool isDead, check, isCol;
+    [SerializeField] bool isDead, check;
 
     Rigidbody rb;
     CapsuleCollider col;
@@ -36,10 +36,7 @@ public class EnemySetting : MonoBehaviour
         CheckTarget();   //檢查目標狀態是不是在車上
         if (!isDead)
         {
-            if (!isCol)
-            {
-                TrackTarget();
-            }
+            TrackTarget();
         }
         else
         {
@@ -59,13 +56,13 @@ public class EnemySetting : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
 
-        if (other.gameObject.CompareTag("Car") && other.gameObject.GetComponent<CarSetting>().inTheCar) //判斷有沒有碰到汽車，並且汽車上要有人
+        if (other.gameObject.CompareTag("Car")) //判斷有沒有碰到汽車
         {
-            navMeshAgent.enabled = false;
-            isCol = true;
             Rigidbody carRb = other.gameObject.GetComponent<Rigidbody>();
             if (carRb.velocity.magnitude >= 1.5f)
             {
+                navMeshAgent.updatePosition = false;
+                navMeshAgent.updateRotation = false;
                 enemyHp -= 100;
                 if (enemyHp <= 0)
                 {
@@ -78,9 +75,8 @@ public class EnemySetting : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Car"))
         {
-            Debug.Log("Exit");
-            isCol = false;
-            navMeshAgent.enabled = true;
+            navMeshAgent.updatePosition = true;
+            navMeshAgent.updateRotation = true;
         }
     }
 
@@ -89,6 +85,7 @@ public class EnemySetting : MonoBehaviour
         if (!playerController.isIncar)
         {
             Target = GameObject.Find("Player").transform;
+
             navMeshAgent.stoppingDistance = 2f;
         }
         else
@@ -106,13 +103,13 @@ public class EnemySetting : MonoBehaviour
         if (distance <= navMeshAgent.stoppingDistance)
         {
             anim.SetBool("Run", false);
-            anim.SetBool("Attack",true);
+            anim.SetBool("Attack", true);
             navMeshAgent.isStopped = true;
-            
+
         }
         else
         {
-            anim.SetBool("Attack",false);
+            anim.SetBool("Attack", false);
             anim.SetBool("Run", true);
             navMeshAgent.isStopped = false;
         }
