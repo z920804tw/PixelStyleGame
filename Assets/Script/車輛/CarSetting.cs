@@ -36,6 +36,8 @@ public class CarSetting : MonoBehaviour
         playerComponent = GameObject.Find("PlayerComponets");
         playerController = GameObject.Find("PlayerControl").GetComponent<PlayerController>();
 
+        carCam=GameObject.Find("Main Camera").GetComponent<Camera>();
+
         carController = GetComponent<CarController>();
         carCols = GetComponents<Collider>();
         rb = GetComponent<Rigidbody>();

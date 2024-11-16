@@ -15,6 +15,7 @@ public class CarTriggerZone : MonoBehaviour
 
     void Start()
     {
+        
         carSetting = transform.parent.GetComponent<CarSetting>();
     }
 
