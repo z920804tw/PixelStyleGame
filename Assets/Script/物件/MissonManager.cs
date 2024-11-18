@@ -7,11 +7,13 @@ public class MissonManager : MonoBehaviour
     // Start is called before the first frame updatepublic QuestInfoList EasyQuestInfoList;
     public GameObject questCanvas;
     public GameObject[] missionDifficulty;
+    Animator anim;
 
     GameObject playerComponets;
     void Start()
     {
         playerComponets = GameObject.Find("PlayerComponets");
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -20,7 +22,7 @@ public class MissonManager : MonoBehaviour
 
     }
     public void SelectDifficutly(int i)
-    {   
+    {
         CloseAllList();
         missionDifficulty[i].SetActive(true);
     }
@@ -28,6 +30,7 @@ public class MissonManager : MonoBehaviour
     public void OpenQuestCanvas()
     {
         questCanvas.SetActive(true);
+        anim.SetBool("Open", true);
         if (playerComponets != null)
         {
             playerComponets.SetActive(false);
@@ -37,6 +40,13 @@ public class MissonManager : MonoBehaviour
     }
 
     public void CloseQuestCanvas()
+    {
+
+        anim.SetBool("Open", false);
+        Invoke("CloseCanvas", 1.1f);
+
+    }
+    void CloseCanvas()
     {
         questCanvas.SetActive(false);
         if (playerComponets != null)
@@ -51,7 +61,7 @@ public class MissonManager : MonoBehaviour
     {
         foreach (GameObject i in missionDifficulty)
         {
-            i.SetActive(false); 
+            i.SetActive(false);
         }
     }
 }
