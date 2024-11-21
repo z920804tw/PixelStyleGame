@@ -25,9 +25,7 @@ public class CarController : MonoBehaviour
     public float breakForce;
     public float maxTurnAngle;
     public float maxSpeed;
-    [Header("汽車音效設定")]
-    public AudioSource audioSource;
-    public AudioClip carIdle;
+
 
     public Vector3 centerOfMass;
 
@@ -38,17 +36,23 @@ public class CarController : MonoBehaviour
     float currentTurnAngle = 0;
 
     PlayerInputAction inputActions;
+    CarAudioController carAudioController;
     private void Awake()
     {
         inputActions = new PlayerInputAction();
+        carAudioController=GetComponent<CarAudioController>();
     }
     private void OnEnable()
     {
         inputActions.Enable();
+        carAudioController.enabled = true;
+
     }
     private void OnDisable()
     {
         inputActions.Disable();
+        carAudioController.enabled = false;
+
     }
 
 
@@ -63,6 +67,7 @@ public class CarController : MonoBehaviour
     void Update()
     {
         // Debug.Log(rb.velocity.magnitude );
+
     }
 
     void FixedUpdate()
@@ -79,24 +84,11 @@ public class CarController : MonoBehaviour
     {
 
         Debug.Log(inputActions.CarControl.Move.ReadValue<Vector3>().z);
-        if (inputActions.CarControl.Move.ReadValue<Vector3>().z == 0)
-        {
-            if (audioSource.isPlaying == false)
-            {
-                audioSource.clip = carIdle;
-                audioSource.Play();
-            }
 
-        }
-        else
-        {
-            currentAcceleration = acceleration * inputActions.CarControl.Move.ReadValue<Vector3>().z;
+        currentAcceleration = acceleration * inputActions.CarControl.Move.ReadValue<Vector3>().z;
 
-            frontLeft.motorTorque = currentAcceleration;
-            frontRight.motorTorque = currentAcceleration;
-            audioSource.Stop();
-            
-        }
+        frontLeft.motorTorque = currentAcceleration;
+        frontRight.motorTorque = currentAcceleration;
 
 
 
@@ -164,5 +156,7 @@ public class CarController : MonoBehaviour
 
         }
     }
+
+
 
 }

@@ -10,7 +10,7 @@ public class CarTriggerZone : MonoBehaviour
 
     [SerializeField] GameObject getOnCarText;
 
-    bool isPlayerTrigger;
+    [SerializeField]bool isPlayerTrigger;
 
 
     void Start()
@@ -24,9 +24,11 @@ public class CarTriggerZone : MonoBehaviour
     {
         if (isPlayerTrigger)
         {
+            
             if (Input.GetKeyDown(KeyCode.F) && GameObject.Find("PlayerPick").GetComponent<PickController>().isHolding==false)
             {
                 carSetting.player = GameObject.Find("Player");
+                
             }
         }
     }
