@@ -40,7 +40,7 @@ public class CarController : MonoBehaviour
     private void Awake()
     {
         inputActions = new PlayerInputAction();
-        carAudioController=GetComponent<CarAudioController>();
+        carAudioController = GetComponent<CarAudioController>();
     }
     private void OnEnable()
     {
@@ -157,6 +157,24 @@ public class CarController : MonoBehaviour
         }
     }
 
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (carAudioController.enabled != false)
+        {
+            if (!other.gameObject.CompareTag("Enemy"))
+            {
+                
+                carAudioController.PlaySound("CarHitObjectSound");
+            }
+            else
+            {
+                Debug.Log("HitEnemy");
+                carAudioController.PlaySound("CarHitEnemySound");
+            }
+        }
+
+    }
 
 
 }

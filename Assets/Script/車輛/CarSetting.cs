@@ -6,13 +6,12 @@ public class CarSetting : MonoBehaviour
 {
     // Start is called before the first frame update
     [Header("車輛設定")]
-    public GameObject player;
-    public GameObject playerComponent;
-    PlayerController playerController;
-    public Camera carCam;
     public Transform driverSeat;
     public Transform carTriggerZone;
-
+    public GameObject player;
+    GameObject playerComponent;
+    PlayerController playerController;
+    Camera carCam;
 
     CarController carController;
     [Header("車內攝影機設定")]
@@ -35,11 +34,12 @@ public class CarSetting : MonoBehaviour
     {
         playerComponent = GameObject.Find("PlayerComponets");
         playerController = GameObject.Find("PlayerControl").GetComponent<PlayerController>();
+        carCam = GameObject.Find("Main Camera").GetComponent<Camera>();
 
-        carCam=GameObject.Find("Main Camera").GetComponent<Camera>();
 
         carController = GetComponent<CarController>();
         carCols = GetComponents<Collider>();
+
         rb = GetComponent<Rigidbody>();
     }
 
@@ -97,6 +97,8 @@ public class CarSetting : MonoBehaviour
                     player = null;
                     inTheCar = false;
                     playerController.isIncar = inTheCar;
+
+                    
 
                     carController.enabled = false;
 

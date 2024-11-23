@@ -6,19 +6,11 @@ public class CarAudioController : MonoBehaviour
 {
     // Start is called before the first frame update
     [Header("汽車音效設定")]
-    public AudioSource audioSource;
-    public AudioClip carIdle;
-    public AudioClip carAccelerateOn;
-    public AudioClip carAccelerateOff;
-    bool isTransitioning;
-
-    [Header("汽車音效設定2")]
+    public CarAudio[] carAudio;
+    [Header("汽車音效參數設定")]
     public float minSpeed;
     public float maxSpeed;
     float currentSpeed;
-
-    public float minPitch;
-    public float maxPitch;
     float pitchFromCar;
     PlayerInputAction inputActions;
     Rigidbody rb;
@@ -27,6 +19,13 @@ public class CarAudioController : MonoBehaviour
     private void Awake()
     {
         inputActions = new PlayerInputAction();
+        foreach (CarAudio i in carAudio)
+        {
+            i.audioSource=gameObject.AddComponent<AudioSource>();
+            i.audioSource.volume=i.volume;
+            i.audioSource.loop=i.isLoop;
+        
+        }
 
 
     }
@@ -39,8 +38,11 @@ public class CarAudioController : MonoBehaviour
     private void OnDisable()
     {
         inputActions.Disable();
-        audioSource.clip = null;
-        audioSource.Stop();
+        foreach (CarAudio i in carAudio)
+        {
+            i.audioSource.clip = null;
+            i.audioSource.Stop();
+        }
 
     }
     void Start()
@@ -52,84 +54,48 @@ public class CarAudioController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        //EngineSound();
-        EngineSound2();
+        EngineSound();
     }
+
 
     void EngineSound()
     {
         currentSpeed = rb.velocity.magnitude;
         pitchFromCar = rb.velocity.magnitude / 50f;
 
-
-
-        if (inputActions.CarControl.Move.ReadValue<Vector3>().z == 0)
+        if (carAudio[0].audioSource.clip != carAudio[0].audioClip)
         {
-            if (currentSpeed > minSpeed)
-            {
-                if (audioSource.clip != carAccelerateOff)
-                {
-                    audioSource.clip = carAccelerateOff;
-                    audioSource.Play();
-                }
-                if (audioSource.pitch > minPitch)
-                {
-                    audioSource.pitch = minPitch + pitchFromCar;
-                }
-            }
-            else
-            {
-                if (audioSource.clip != carIdle)
-                {
-                    audioSource.clip = carIdle;
-                    audioSource.Play();
-                }
+            carAudio[0].audioSource.clip = carAudio[0].audioClip;
+            carAudio[0].audioSource.Play();
 
-                audioSource.pitch = maxPitch;
-            }
         }
-        else
-        {
-            if (audioSource.clip != carAccelerateOn)
-            {
-                audioSource.clip = carAccelerateOn;
-                audioSource.Play();
-            }
-
-            if (currentSpeed > minSpeed && currentSpeed < maxSpeed)
-            {
-                audioSource.pitch = minPitch + pitchFromCar;
-            }
-            else if (currentSpeed >= maxSpeed)
-            {
-                audioSource.pitch = maxPitch;
-            }
-        }
-    }
 
 
-
-    void EngineSound2()
-    {
-        if (audioSource.clip != carAccelerateOn)
-        {
-            audioSource.clip = carAccelerateOn;
-            audioSource.Play();
-        }
-        currentSpeed = rb.velocity.magnitude;
-        pitchFromCar = rb.velocity.magnitude / 50f;
         if (currentSpeed < minSpeed)
         {
-            audioSource.pitch = minPitch;
+            carAudio[0].audioSource.pitch = carAudio[0].minPitch;
         }
         else if (currentSpeed > minSpeed && currentSpeed < maxSpeed)
         {
-            audioSource.pitch = minPitch + pitchFromCar;
+            carAudio[0].audioSource.pitch = carAudio[0].minPitch + pitchFromCar;
         }
         else if (currentSpeed >= maxSpeed)
         {
-            audioSource.pitch = maxPitch;
+            carAudio[0].audioSource.pitch = carAudio[0].maxPitch;
+        }
+
+    }
+
+
+    public void PlaySound(string name)
+    {
+        foreach (CarAudio i in carAudio)
+        {
+            if (i.name == name)
+            {
+                i.audioSource.PlayOneShot(i.audioClip);
+                break;
+            }
         }
 
     }
