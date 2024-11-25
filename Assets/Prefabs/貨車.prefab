@@ -1803,21 +1803,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carAudio:
   - name: CarAccelerateSound
-    volume: 0.5
+    volume: 1
     minPitch: 0.2
     maxPitch: 0.5
     isLoop: 1
     audioClip: {fileID: 8300000, guid: 92b51350a374b0145ba411bf6037d2af, type: 3}
     audioSource: {fileID: 0}
   - name: CarHitObjectSound
-    volume: 0.3
+    volume: 0.2
     minPitch: 0
     maxPitch: 0
     isLoop: 0
     audioClip: {fileID: 8300000, guid: d318b897bae5ddf41b6a559cb6bba63c, type: 3}
     audioSource: {fileID: 0}
   - name: CarHitEnemySound
-    volume: 0.4
+    volume: 0.3
     minPitch: 0
     maxPitch: 0
     isLoop: 0
