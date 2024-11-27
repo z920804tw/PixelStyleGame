@@ -18,7 +18,8 @@ public class CarSetting : MonoBehaviour
     [SerializeField] float sensX;
     [SerializeField] float sensY;
 
-
+    [Header("車輛參數設定")]
+    public float carHp;
 
 
     [Header("Debug")]
