@@ -37,6 +37,7 @@ public class CarController : MonoBehaviour
 
     PlayerInputAction inputActions;
     CarAudioController carAudioController;
+    
     private void Awake()
     {
         inputActions = new PlayerInputAction();
@@ -83,15 +84,10 @@ public class CarController : MonoBehaviour
     void CarAcceleration() //汽車加速功能
     {
 
-        Debug.Log(inputActions.CarControl.Move.ReadValue<Vector3>().z);
-
         currentAcceleration = acceleration * inputActions.CarControl.Move.ReadValue<Vector3>().z;
 
         frontLeft.motorTorque = currentAcceleration;
         frontRight.motorTorque = currentAcceleration;
-
-
-
 
         LimitSpeed();
         StopCar();
@@ -104,6 +100,7 @@ public class CarController : MonoBehaviour
 
         frontLeft.steerAngle = currentTurnAngle;
         frontRight.steerAngle = currentTurnAngle;
+        
         UpdateWheel(frontLeft, frontLeftWheel);
         UpdateWheel(frontRight, frontRightWheel);
         UpdateWheel(backLeft, backLeftWheel);
@@ -164,7 +161,7 @@ public class CarController : MonoBehaviour
         {
             if (!other.gameObject.CompareTag("Enemy"))
             {
-                
+                GetComponent<CarSetting>().TakeDmg(2);
                 carAudioController.PlaySound("CarHitObjectSound");
             }
             else

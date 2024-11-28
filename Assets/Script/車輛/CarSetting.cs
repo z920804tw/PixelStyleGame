@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CarSetting : MonoBehaviour
 {
@@ -19,7 +20,10 @@ public class CarSetting : MonoBehaviour
     [SerializeField] float sensY;
 
     [Header("車輛參數設定")]
+    public float maxHp;
     public float carHp;
+    public Image HealthBar;
+
 
 
     [Header("Debug")]
@@ -42,6 +46,9 @@ public class CarSetting : MonoBehaviour
         carCols = GetComponents<Collider>();
 
         rb = GetComponent<Rigidbody>();
+
+        carHp = maxHp;
+        HealthBar.fillAmount = carHp / maxHp;
     }
 
     // Update is called once per frame
@@ -99,7 +106,7 @@ public class CarSetting : MonoBehaviour
                     inTheCar = false;
                     playerController.isIncar = inTheCar;
 
-                    
+
 
                     carController.enabled = false;
 
@@ -108,6 +115,11 @@ public class CarSetting : MonoBehaviour
 
         }
 
+    }
+    public void TakeDmg(int i)
+    {
+        carHp = carHp - i;
+        HealthBar.fillAmount = carHp / maxHp;
     }
 
 

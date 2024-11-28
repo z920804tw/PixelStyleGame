@@ -152,6 +152,7 @@ public class EnemyController : MonoBehaviour
         anim.SetBool("Run", false);
         anim.SetBool("Attack", true);
         agent.isStopped = true;
+
     }
     private void OnCollisionEnter(Collision other)
     {
@@ -178,9 +179,18 @@ public class EnemyController : MonoBehaviour
             agent.updateRotation = true;
         }
     }
-    public void AttackSound()
+    public void Attack()
     {
         enemyAudioController.enemyAudio[2].audioSource.PlayOneShot(enemyAudioController.enemyAudio[2].audioClip);
+        if (Target.gameObject.CompareTag("Car"))
+        {
+            Target.GetComponent<CarSetting>().TakeDmg(2);
+            Debug.Log("打的是汽車");
+        }
+        else
+        {
+            Debug.Log("打的是玩家");
+        }
     }
 
 
