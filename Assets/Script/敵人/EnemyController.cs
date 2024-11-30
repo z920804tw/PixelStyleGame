@@ -14,10 +14,12 @@ public class EnemyController : MonoBehaviour
     public Transform Target;
     public LayerMask TargetLayer;
     public Animator anim;
+    public EnemySpawn enemySpawn;
     Rigidbody rb;
     Collider col;
     EnemyAudioController enemyAudioController;
-    PlayerController playerController;
+    PlayerComponets playerComponets;
+
 
     [Header("敵人參數設定")]
     public int enemyHp;
@@ -36,7 +38,8 @@ public class EnemyController : MonoBehaviour
     private void Awake()
     {
 
-        playerController = GameObject.Find("PlayerControl").GetComponent<PlayerController>();
+        playerComponets = GameObject.Find("Player").GetComponent<PlayerComponets>();
+
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
@@ -72,18 +75,31 @@ public class EnemyController : MonoBehaviour
                 AudioChange(2);
                 AttackTarget();
             }
+
+
+            float distance = Vector3.Distance(this.transform.position, Target.transform.position);
+            if (distance > 80f)
+            {
+                Destroy(this.gameObject);
+                if (enemySpawn != null)
+                {
+                    enemySpawn.spawnCount--;
+
+                }
+            }
         }
         else
         {
             if (!check)
             {
                 check = true;
-                agent.enabled = false;
-                rb.isKinematic = true;
-                col.isTrigger = true;
-
                 anim.SetTrigger("Dying");
                 Destroy(this.gameObject, 10f);
+
+                if (enemySpawn != null)
+                {
+                    enemySpawn.spawnCount--;
+                }
 
             }
         }
@@ -101,18 +117,19 @@ public class EnemyController : MonoBehaviour
     }
     void TargetSet()   //目標狀態設定
     {
-        if (!playerController.isIncar)
+        bool isIncar = playerComponets.isInCar();
+        if (!isIncar)
         {
             Target = GameObject.Find("Player").transform;
             TargetLayer = 1 << 8;
-            sightRange = 10f;
+            sightRange = 15f;
             attackRange = 1f;
         }
         else
         {
-            Target = playerController.transform.root;
+            Target = GameObject.Find("貨車").transform;
             TargetLayer = 1 << 9;
-            sightRange = 20f;
+            sightRange = 40f;
             attackRange = 2f;
         }
     }
@@ -129,7 +146,7 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            agent.destination = walkPoint;
+            agent.SetDestination(walkPoint);
             agent.speed = 1f;
             Vector3 distance = transform.position - walkPoint;
             if (distance.magnitude < 1f)
@@ -144,8 +161,8 @@ public class EnemyController : MonoBehaviour
         agent.isStopped = false;
         anim.SetBool("Attack", false);
         anim.SetBool("Run", true);
-        agent.destination = Target.position;
-        agent.speed = 2.5f;
+        agent.SetDestination(Target.position);
+        agent.speed = 3f;
     }
     void AttackTarget() //攻擊模式
     {
@@ -166,6 +183,9 @@ public class EnemyController : MonoBehaviour
                 agent.updateRotation = false;
                 if (enemyHp <= 0)
                 {
+                    agent.isStopped = true;
+                    rb.constraints = RigidbodyConstraints.FreezeAll;
+                    col.isTrigger = true;
                     isDead = true;
                 }
             }
