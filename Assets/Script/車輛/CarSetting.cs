@@ -76,6 +76,7 @@ public class CarSetting : MonoBehaviour
 
                 carCam.transform.localRotation = Quaternion.Euler(0, 0, 0);  //攝影機歸位
                 carController.enabled = true;       //汽車操控打開
+                
 
 
 
@@ -105,7 +106,7 @@ public class CarSetting : MonoBehaviour
                     player = null;
                     inTheCar = false;
                     playerController.isIncar = inTheCar;
-
+                    
 
 
                     carController.enabled = false;

@@ -5,21 +5,8 @@ using UnityEngine;
 public class EnemyAudioController : MonoBehaviour
 {
     // Start is called before the first frame update
-    public EnemyAudio[] enemyAudio;
-    void Awake()
-    {
-        foreach (EnemyAudio i in enemyAudio)
-        {
-            i.audioSource = gameObject.AddComponent<AudioSource>();
-            i.audioSource.volume = i.volume;
-            i.audioSource.pitch = i.pitch;
-
-            i.audioSource.loop = i.isLoop;
-            i.audioSource.spatialBlend = 1;
-
-
-        }
-    }
+    public AudioSource enemySound;
+    public AudioClip[] enemyClips;
 
 
     void Update()
@@ -28,10 +15,25 @@ public class EnemyAudioController : MonoBehaviour
     }
     public void StopAllSound()
     {
-        foreach (EnemyAudio i in enemyAudio)
+        //enemySound.Stop();
+        enemySound.clip = null;
+    }
+
+    public void PlaySound(int i)
+    {
+        if (enemyClips[i] != null)
         {
-            i.audioSource.Stop();
-            i.audioSource.clip = null;
+            enemySound.PlayOneShot(enemyClips[i]);
+        }
+    }
+
+    public void AudioChange(int i)
+    {
+        if (enemySound.clip != enemyClips[i])
+        {
+            StopAllSound();
+            enemySound.clip = enemyClips[i];
+            enemySound.Play();
         }
     }
 

@@ -46,18 +46,7 @@ public class EnemySpawn : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            if (spawnCount > 0)
-            {
-                GameObject[] zombies = GameObject.FindGameObjectsWithTag("Enemy");
-                foreach (GameObject i in zombies)
-                {
-                    Destroy(i);
-                }
-                spawnCount=0;
-            }
-        }
+
     }
 
     Vector3 RandomPos()

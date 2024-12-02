@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ public class CheckPonit : MonoBehaviour
     public UnityEvent unityEvent;
     public GameObject hint;
     public GameObject progressBar;
+    public TMP_Text progressValueText;
     public bool isFinish;
     bool isStay;
 
@@ -27,15 +29,18 @@ public class CheckPonit : MonoBehaviour
     {
         if (isStay)
         {
+            float format=progressValue*10;
+            string value=format.ToString("F1");
+            progressValueText.text = $"{value}%";
             if (Input.GetKey(KeyCode.E))
             {
                 hint.SetActive(false);
                 progressBar.SetActive(true);
 
                 progressValue += Time.deltaTime;
-                progressBar.GetComponent<Image>().fillAmount = progressValue / 5;
+                progressBar.GetComponent<Image>().fillAmount = progressValue / 10;
 
-                if (progressValue >= 5)
+                if (progressValue >= 10)
                 {
                     Debug.Log("完成!");
                     isFinish = true;
@@ -43,7 +48,7 @@ public class CheckPonit : MonoBehaviour
                     unityEvent.Invoke();
 
                     this.gameObject.SetActive(false);
-                    
+
                 }
             }
             else
@@ -56,9 +61,11 @@ public class CheckPonit : MonoBehaviour
                     return;
                 }
                 progressValue -= Time.deltaTime;
-                progressBar.GetComponent<Image>().fillAmount = progressValue / 5;
+
+                progressBar.GetComponent<Image>().fillAmount = progressValue / 10;
 
             }
+
         }
         else
         {
@@ -83,4 +90,7 @@ public class CheckPonit : MonoBehaviour
             progressBar.SetActive(false);
         }
     }
+
+
+
 }

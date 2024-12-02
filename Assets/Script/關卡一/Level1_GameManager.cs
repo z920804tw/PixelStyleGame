@@ -13,7 +13,7 @@ public class Level1_GameManager : MonoBehaviour
     [SerializeField] GameObject[] checkPoints;
     public TMP_Text checkPointText;
     public int checkPointCount;
-    public float checkPonitDistance;
+
 
 
     [Header("汽車相關設定")]
@@ -54,7 +54,10 @@ public class Level1_GameManager : MonoBehaviour
             }
 
         }
-        else { }
+        else
+        {
+
+        }
 
     }
 
@@ -71,7 +74,7 @@ public class Level1_GameManager : MonoBehaviour
     {
         checkPointCount++;
         UpdateQuest(currnetStatus);  //每當有一個checkPoint完成，就會去更新一次
-        if (checkPointCount<checkPoints.Length)
+        if (checkPointCount < checkPoints.Length)
         {
             checkPoints[checkPointCount].SetActive(true);
         }
@@ -88,6 +91,7 @@ public class Level1_GameManager : MonoBehaviour
 
             case 1:
                 questHintText.text = questList[currnetStatus].description + $",當前進度{checkPointCount}/{checkPoints.Length}";
+                //checkPoints[checkPointCount].SetActive(true);
                 if (checkPointCount >= checkPoints.Length)
                 {
                     NextStatus(currnetStatus);

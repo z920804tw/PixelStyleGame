@@ -59,20 +59,20 @@ public class EnemyController : MonoBehaviour
             if (!inSightRange && !inAttackRange)  //如果沒有目標近來 就巡邏
             {
 
-                AudioChange(0);
+                enemyAudioController.AudioChange(0);
                 Patroling();
 
             }
             else if (inSightRange && !inAttackRange)//如果有目標近來，但還沒到攻擊範圍 就追擊
             {
-                AudioChange(1);
+                enemyAudioController.AudioChange(1);
                 ChaseTarget();
                 walkPointSet = false;
 
             }
             else if (inSightRange && inAttackRange)//如果有目標近來並且盡到攻擊範圍， 就攻擊
             {
-                AudioChange(2);
+                enemyAudioController.StopAllSound();
                 AttackTarget();
             }
 
@@ -106,15 +106,7 @@ public class EnemyController : MonoBehaviour
 
 
     }
-    void AudioChange(int i)
-    {
-        if (enemyAudioController.enemyAudio[i].audioSource.clip != enemyAudioController.enemyAudio[i].audioClip)
-        {
-            enemyAudioController.StopAllSound();
-            enemyAudioController.enemyAudio[i].audioSource.clip = enemyAudioController.enemyAudio[i].audioClip;
-            enemyAudioController.enemyAudio[i].audioSource.Play();
-        }
-    }
+
     void TargetSet()   //目標狀態設定
     {
         bool isIncar = playerComponets.isInCar();
@@ -201,7 +193,7 @@ public class EnemyController : MonoBehaviour
     }
     public void Attack()
     {
-        enemyAudioController.enemyAudio[2].audioSource.PlayOneShot(enemyAudioController.enemyAudio[2].audioClip);
+        enemyAudioController.PlaySound(2);
         if (Target.gameObject.CompareTag("Car"))
         {
             Target.GetComponent<CarSetting>().TakeDmg(2);

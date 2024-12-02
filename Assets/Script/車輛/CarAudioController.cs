@@ -6,10 +6,19 @@ public class CarAudioController : MonoBehaviour
 {
     // Start is called before the first frame update
     [Header("汽車音效設定")]
-    public CarAudio[] carAudio;
+    //public CarAudio[] carAudio;
+
+    public AudioSource carEngine;
+    public AudioSource carSFX;
+
+    public AudioClip carEngineClip;
+    public AudioClip[] carSFXClips;
+
     [Header("汽車音效參數設定")]
     public float minSpeed;
     public float maxSpeed;
+    public float minPitch;
+    public float maxPitch;
     float currentSpeed;
     float pitchFromCar;
     PlayerInputAction inputActions;
@@ -19,30 +28,19 @@ public class CarAudioController : MonoBehaviour
     private void Awake()
     {
         inputActions = new PlayerInputAction();
-        foreach (CarAudio i in carAudio)
-        {
-            i.audioSource=gameObject.AddComponent<AudioSource>();
-            i.audioSource.volume=i.volume;
-            i.audioSource.loop=i.isLoop;
-        
-        }
 
 
     }
     private void OnEnable()
     {
         inputActions.Enable();
-
+        carEngine.Play();
 
     }
     private void OnDisable()
     {
         inputActions.Disable();
-        foreach (CarAudio i in carAudio)
-        {
-            i.audioSource.clip = null;
-            i.audioSource.Stop();
-        }
+        carEngine.Pause();
 
     }
     void Start()
@@ -63,39 +61,35 @@ public class CarAudioController : MonoBehaviour
         currentSpeed = rb.velocity.magnitude;
         pitchFromCar = rb.velocity.magnitude / 50f;
 
-        if (carAudio[0].audioSource.clip != carAudio[0].audioClip)
+        if (carEngine.clip != carEngineClip)
         {
-            carAudio[0].audioSource.clip = carAudio[0].audioClip;
-            carAudio[0].audioSource.Play();
+            carEngine.clip = carEngineClip;
+            carEngine.Play();
 
         }
 
 
         if (currentSpeed < minSpeed)
         {
-            carAudio[0].audioSource.pitch = carAudio[0].minPitch;
+            carEngine.pitch = minPitch;
         }
         else if (currentSpeed > minSpeed && currentSpeed < maxSpeed)
         {
-            carAudio[0].audioSource.pitch = carAudio[0].minPitch + pitchFromCar;
+            carEngine.pitch = minPitch + pitchFromCar;
         }
         else if (currentSpeed >= maxSpeed)
         {
-            carAudio[0].audioSource.pitch = carAudio[0].maxPitch;
+            carEngine.pitch = maxPitch;
         }
 
     }
 
 
-    public void PlaySound(string name)
+    public void PlaySound(int i)
     {
-        foreach (CarAudio i in carAudio)
+        if (carSFXClips[i] != null)
         {
-            if (i.name == name)
-            {
-                i.audioSource.PlayOneShot(i.audioClip);
-                break;
-            }
+            carSFX.PlayOneShot(carSFXClips[i]);
         }
 
     }

@@ -162,12 +162,12 @@ public class CarController : MonoBehaviour
             if (!other.gameObject.CompareTag("Enemy"))
             {
                 GetComponent<CarSetting>().TakeDmg(2);
-                carAudioController.PlaySound("CarHitObjectSound");
+                carAudioController.PlaySound(0);
             }
             else
             {
-                Debug.Log("HitEnemy");
-                carAudioController.PlaySound("CarHitEnemySound");
+                
+                carAudioController.PlaySound(1);
             }
         }
 
