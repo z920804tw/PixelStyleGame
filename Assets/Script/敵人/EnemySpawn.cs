@@ -11,6 +11,8 @@ public class EnemySpawn : MonoBehaviour
 
     [SerializeField] float spawnRange;
     [SerializeField] bool isEnter;
+
+
     [Header("敵人參數設定")]
     public GameObject enemys;
 
@@ -28,6 +30,7 @@ public class EnemySpawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         isEnter = Physics.CheckSphere(transform.position, spawnRange, TargetLayer);
         if (isEnter)
         {
@@ -47,7 +50,10 @@ public class EnemySpawn : MonoBehaviour
             }
         }
 
+
+
     }
+
 
     Vector3 RandomPos()
     {

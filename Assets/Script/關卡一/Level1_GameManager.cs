@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Level1_GameManager : MonoBehaviour
 {
@@ -14,15 +15,26 @@ public class Level1_GameManager : MonoBehaviour
     public TMP_Text checkPointText;
     public int checkPointCount;
 
+    [Header("關卡結束設定")]
+    public GameObject gameStatusUI;
+    public GameObject gameEndUI;
+    public SceneCanvasManager sceneCM;
+    public TMP_Text endStatus;
+    public TMP_Text timeCostText;
+    public TMP_Text killConutText;
+
+    public GameObject backToLobby;
+    public GameObject resetLevel;
+    int endCase;
+    bool check;
 
 
-    [Header("汽車相關設定")]
-    [SerializeField] float carHp;
-    GameObject car;
 
     [Header("Debug")]
     public int currnetStatus;
     public bool isEnd;
+    float carHp;
+    GameObject car;
 
     void Start()
     {
@@ -31,6 +43,7 @@ public class Level1_GameManager : MonoBehaviour
             i.SetActive(false);
         }
         checkPoints[checkPointCount].SetActive(true);
+        endCase = -1;
 
         car = GameObject.Find("貨車");
         UpdateQuest(currnetStatus); //預設0
@@ -41,7 +54,6 @@ public class Level1_GameManager : MonoBehaviour
     {
         if (!isEnd)
         {
-
             if (checkPointCount < checkPoints.Length)  //如果還有檢查點，就會一直更新檢查點距離
             {
                 CaculatePointDis();
@@ -51,11 +63,17 @@ public class Level1_GameManager : MonoBehaviour
             if (carHp <= 0)  //如果車輛血量=0就結束
             {
                 isEnd = true;
+                endCase = 1;
             }
 
         }
         else
         {
+            if (!check)
+            {
+                check = true;
+                EndGame(endCase);
+            }
 
         }
 
@@ -86,11 +104,11 @@ public class Level1_GameManager : MonoBehaviour
         switch (i)
         {
             case 0:
-                questHintText.text = questList[currnetStatus].description;
+                questHintText.text = "任務目標:" + questList[currnetStatus].description;
                 break;
 
             case 1:
-                questHintText.text = questList[currnetStatus].description + $",當前進度{checkPointCount}/{checkPoints.Length}";
+                questHintText.text = "任務目標:" + questList[currnetStatus].description + $",當前進度{checkPointCount}/{checkPoints.Length}";
                 //checkPoints[checkPointCount].SetActive(true);
                 if (checkPointCount >= checkPoints.Length)
                 {
@@ -98,8 +116,9 @@ public class Level1_GameManager : MonoBehaviour
                 }
                 break;
             case 2:
-                questHintText.text = questList[currnetStatus].description;
+                questHintText.text = "任務目標:" + questList[currnetStatus].description;
                 isEnd = true;
+                endCase = 0;
                 break;
         }
     }
@@ -111,7 +130,43 @@ public class Level1_GameManager : MonoBehaviour
         checkPointText.text = $"目標距離:{(int)distance}m";
 
     }
+    void EndGame(int i)
+    {
+        gameEndUI.SetActive(true);
+        gameStatusUI.SetActive(false);
+        timeCostText.text = $"花費時間{(int)sceneCM.time}秒";
+
+        switch (i)
+        {
+            case 0: //win
+
+                endStatus.text = $"任務狀態-完成";
+                backToLobby.SetActive(true);
+
+                StopScene();
+                break;
+
+            case 1: //lose
+                endStatus.text = $"任務狀態-失敗";
+                resetLevel.SetActive(true);
+                StopScene();
+                break;
+        }
+    }
 
 
+    void StopScene()
+    {
+        GameObject.Find("貨車").GetComponent<CarSetting>().enabled = false;
+        GameObject.Find("貨車").GetComponent<CarController>().enabled = false;
+        GameObject.Find("貨車").GetComponent<CarAudioController>().enabled = false;
 
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        sceneCM.End();
+        //gameEndUI.GetComponent<Animator>().SetBool("Open",true);    
+        //Time.timeScale = 0;
+    }
+    
 }
