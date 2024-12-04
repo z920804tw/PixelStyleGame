@@ -15,18 +15,11 @@ public class Level1_GameManager : MonoBehaviour
     public TMP_Text checkPointText;
     public int checkPointCount;
 
-    [Header("關卡結束設定")]
-    public GameObject gameStatusUI;
-    public GameObject gameEndUI;
+    [Header("關卡UI設定")]
     public SceneCanvasManager sceneCM;
-    public TMP_Text endStatus;
-    public TMP_Text timeCostText;
-    public TMP_Text killConutText;
-
-    public GameObject backToLobby;
-    public GameObject resetLevel;
     int endCase;
     bool check;
+    
 
 
 
@@ -132,26 +125,8 @@ public class Level1_GameManager : MonoBehaviour
     }
     void EndGame(int i)
     {
-        gameEndUI.SetActive(true);
-        gameStatusUI.SetActive(false);
-        timeCostText.text = $"花費時間{(int)sceneCM.time}秒";
-
-        switch (i)
-        {
-            case 0: //win
-
-                endStatus.text = $"任務狀態-完成";
-                backToLobby.SetActive(true);
-
-                StopScene();
-                break;
-
-            case 1: //lose
-                endStatus.text = $"任務狀態-失敗";
-                resetLevel.SetActive(true);
-                StopScene();
-                break;
-        }
+       StopScene();
+       sceneCM.EndLevel(i);
     }
 
 
@@ -163,10 +138,7 @@ public class Level1_GameManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-
-        sceneCM.End();
-        //gameEndUI.GetComponent<Animator>().SetBool("Open",true);    
-        //Time.timeScale = 0;
+    
     }
     
 }

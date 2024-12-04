@@ -19,7 +19,7 @@ public class EnemyController : MonoBehaviour
     Collider col;
     EnemyAudioController enemyAudioController;
     PlayerComponets playerComponets;
-
+    SceneCanvasManager sceneCM;
 
     [Header("敵人參數設定")]
     public int enemyHp;
@@ -34,11 +34,14 @@ public class EnemyController : MonoBehaviour
     public bool inSightRange, inAttackRange;
     bool isDead;
 
+    public bool isEnd;
+
 
     private void Awake()
     {
 
         playerComponets = GameObject.Find("Player").GetComponent<PlayerComponets>();
+        sceneCM = GameObject.Find("SceneCanvas").GetComponent<SceneCanvasManager>();
 
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
@@ -50,59 +53,72 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isDead)
+        if (!isEnd)
         {
-            inSightRange = Physics.CheckSphere(transform.position, sightRange, TargetLayer);
-            inAttackRange = Physics.CheckSphere(transform.position, attackRange, TargetLayer);
-            TargetSet();
-
-            if (!inSightRange && !inAttackRange)  //如果沒有目標近來 就巡邏
+            if (sceneCM.endUI.activeSelf)
             {
-
-                enemyAudioController.AudioChange(0);
-                Patroling();
-
+                isEnd=true;
             }
-            else if (inSightRange && !inAttackRange)//如果有目標近來，但還沒到攻擊範圍 就追擊
+            if (!isDead)
             {
-                enemyAudioController.AudioChange(1);
-                ChaseTarget();
-                walkPointSet = false;
+                inSightRange = Physics.CheckSphere(transform.position, sightRange, TargetLayer);
+                inAttackRange = Physics.CheckSphere(transform.position, attackRange, TargetLayer);
+                TargetSet();
 
-            }
-            else if (inSightRange && inAttackRange)//如果有目標近來並且盡到攻擊範圍， 就攻擊
-            {
-                enemyAudioController.StopAllSound();
-                AttackTarget();
-            }
-
-
-            float distance = Vector3.Distance(this.transform.position, Target.transform.position);
-            if (distance > 80f)
-            {
-                Destroy(this.gameObject);
-                if (enemySpawn != null)
+                if (!inSightRange && !inAttackRange)  //如果沒有目標近來 就巡邏
                 {
-                    enemySpawn.spawnCount--;
+
+                    enemyAudioController.AudioChange(0);
+                    Patroling();
+
+                }
+                else if (inSightRange && !inAttackRange)//如果有目標近來，但還沒到攻擊範圍 就追擊
+                {
+                    enemyAudioController.AudioChange(1);
+                    ChaseTarget();
+                    walkPointSet = false;
+
+                }
+                else if (inSightRange && inAttackRange)//如果有目標近來並且盡到攻擊範圍， 就攻擊
+                {
+                    enemyAudioController.StopAllSound();
+                    AttackTarget();
+                }
+
+                //距離超過80會消失
+                float distance = Vector3.Distance(this.transform.position, Target.transform.position);
+                if (distance > 80f)
+                {
+                    Destroy(this.gameObject);
+                    if (enemySpawn != null)
+                    {
+                        enemySpawn.spawnCount--;
+
+                    }
+                }
+            }
+            else
+            {
+                if (!check)
+                {
+                    check = true;
+                    anim.SetTrigger("Dying");
+                    Destroy(this.gameObject, 10f);
+
+                    if (enemySpawn != null)
+                    {
+                        enemySpawn.spawnCount--;
+                    }
 
                 }
             }
         }
-        else
+        else //遊戲結束後，敵人就停止動作
         {
-            if (!check)
-            {
-                check = true;
-                anim.SetTrigger("Dying");
-                Destroy(this.gameObject, 10f);
-
-                if (enemySpawn != null)
-                {
-                    enemySpawn.spawnCount--;
-                }
-
-            }
+            agent.isStopped = true;
+            enemyAudioController.enemySound.volume = 0;
         }
+
 
 
     }

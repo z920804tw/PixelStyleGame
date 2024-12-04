@@ -2004,7 +2004,7 @@ MonoBehaviour:
   player: {fileID: 0}
   sensX: 400
   sensY: 400
-  maxHp: 0
+  maxHp: 50
   carHp: 0
   HealthBar: {fileID: 3816012066316471344}
   inTheCar: 0
@@ -2046,8 +2046,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5167063274d7494d97e0f125f9df803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carEngine: {fileID: 0}
-  carSFX: {fileID: 0}
+  carEngine: {fileID: 8723876035344608267}
+  carSFX: {fileID: 6305669970580056048}
   carEngineClip: {fileID: 8300000, guid: 92b51350a374b0145ba411bf6037d2af, type: 3}
   carSFXClips:
   - {fileID: 8300000, guid: d318b897bae5ddf41b6a559cb6bba63c, type: 3}
@@ -2257,7 +2257,7 @@ NavMeshObstacle:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8114025565577631104}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Shape: 1
   m_Extents: {x: 1.035, y: 0.5, z: 2.735}

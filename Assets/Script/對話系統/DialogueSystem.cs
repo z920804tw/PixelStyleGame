@@ -34,7 +34,7 @@ public class DialogueSystem : MonoBehaviour
 
     void Start()
     {
-        playerComponet = GameObject.Find("PlayerComponets").gameObject;
+        playerComponet = GameObject.Find("Player").GetComponent<PlayerComponets>().PlayerComponet;
         GetJsonInfo(textAsset);
     }
 

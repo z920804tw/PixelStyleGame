@@ -37,8 +37,8 @@ public class CarSetting : MonoBehaviour
     float yRotation;
     void Start()
     {
-        playerComponent = GameObject.Find("PlayerComponets");
-        playerController = GameObject.Find("PlayerControl").GetComponent<PlayerController>();
+        playerComponent = GameObject.Find("Player").GetComponent<PlayerComponets>().PlayerComponet;
+        playerController = GameObject.Find("Player").GetComponent<PlayerComponets>().playerController;
         carCam = GameObject.Find("Main Camera").GetComponent<Camera>();
 
 
