@@ -57,7 +57,7 @@ public class EnemyController : MonoBehaviour
         {
             if (sceneCM.endUI.activeSelf)
             {
-                isEnd=true;
+                isEnd = true;
             }
             if (!isDead)
             {
@@ -117,6 +117,8 @@ public class EnemyController : MonoBehaviour
         {
             agent.isStopped = true;
             enemyAudioController.enemySound.volume = 0;
+            anim.SetBool("Run", false);
+            anim.SetBool("Attack", false);
         }
 
 
