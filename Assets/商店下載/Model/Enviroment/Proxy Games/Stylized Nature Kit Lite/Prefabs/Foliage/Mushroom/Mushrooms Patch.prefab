@@ -93,7 +93,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4315980460206069383}
   - component: {fileID: 2456599840237334245}
-  - component: {fileID: 5936221014469350536}
   m_Layer: 0
   m_Name: Mushrooms Patch
   m_TagString: Untagged
@@ -134,45 +133,23 @@ LODGroup:
   m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.100033164
+  - screenRelativeHeight: 0.6308645
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 2486139755780647163}
-  - screenRelativeHeight: 0.066044
+  - screenRelativeHeight: 0.1833247
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 3424910437295925308}
-  - screenRelativeHeight: 0.032829717
+  - screenRelativeHeight: 0.106132746
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 8806160727832739590}
-  - screenRelativeHeight: 0.01
+  - screenRelativeHeight: 0.016364574
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 8962484763344002249}
   m_Enabled: 1
---- !u!64 &5936221014469350536
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6684935879519352256}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -4624458766430847684, guid: 27c3f4d36f77dde429372ccba3513837, type: 3}
 --- !u!1 &8041568120234881133
 GameObject:
   m_ObjectHideFlags: 0
