@@ -28,7 +28,7 @@ public class SceneCanvasManager : MonoBehaviour
     {
         endUI.SetActive(false);
         startUI.SetActive(true);
-        playerComponet = GameObject.Find("PlayerComponets");
+        playerComponet = GameObject.Find("Player").GetComponent<PlayerComponets>().PlayerComponet;
         playerComponet.SetActive(false);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
