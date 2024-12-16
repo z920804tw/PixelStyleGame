@@ -1294,10 +1294,11 @@ MonoBehaviour:
   enemySpawn: {fileID: 0}
   enemyHp: 100
   walkPointRange: 10
-  sightRange: 10
-  attackRange: 1
+  defaultSight: 15
+  carSight: 30
   inSightRange: 0
   inAttackRange: 0
+  isEnd: 0
 --- !u!114 &4124810397812877660
 MonoBehaviour:
   m_ObjectHideFlags: 0

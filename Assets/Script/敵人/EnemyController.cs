@@ -30,7 +30,9 @@ public class EnemyController : MonoBehaviour
     public float walkPointRange;
 
     //狀態
-    public float sightRange, attackRange;
+    public float defaultSight,carSight;
+    float sightRange,attackRange;
+    
     public bool inSightRange, inAttackRange;
     bool isDead;
 
@@ -132,14 +134,14 @@ public class EnemyController : MonoBehaviour
         {
             Target = GameObject.Find("Player").transform;
             TargetLayer = 1 << 8;
-            sightRange = 15f;
+            sightRange = defaultSight;
             attackRange = 1f;
         }
         else
         {
             Target = GameObject.Find("貨車").transform;
             TargetLayer = 1 << 9;
-            sightRange = 40f;
+            sightRange = carSight;
             attackRange = 2f;
         }
     }
@@ -186,7 +188,7 @@ public class EnemyController : MonoBehaviour
         if (other.gameObject.CompareTag("Car"))
         {
             Rigidbody CarRb = other.gameObject.GetComponent<Rigidbody>();
-            if (CarRb.velocity.magnitude >= 2.5f)
+            if (CarRb.velocity.magnitude >= 2f)
             {
                 enemyHp -= 100;
                 agent.updatePosition = false;

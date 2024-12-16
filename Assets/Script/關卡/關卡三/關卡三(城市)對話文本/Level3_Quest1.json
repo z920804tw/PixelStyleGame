@@ -1,0 +1,19 @@
+{
+  "dialogues": [
+    {
+      "title": "talk1",
+      "characterName": "人員1",
+      "talkContent": "你就是這次的運送人員吧，歡迎來到城市地區，我是負責這邊區域的人員"
+    },
+    {
+      "title": "talk2",
+      "characterName": "人員1",
+      "talkContent": "這次的運送總共會需要你送4個地點，請將貨物送到指定地點吧。"
+    },
+    {
+      "title": "talk3",
+      "characterName": "人員1",
+      "talkContent": "路上可能會有一些有攻擊性的怪物，請麻煩注意車輛的血量，如果歸零就會任務失敗。"
+    }
+  ]
+}
