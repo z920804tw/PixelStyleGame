@@ -35,7 +35,7 @@ public class Level3_GameManager : MonoBehaviour
         }
         checkPoints[checkPointCount].SetActive(true);
         endCase = -1;
-
+        
         car = GameObject.Find("貨車");
         UpdateQuest(currnetStatus); //預設0
     }

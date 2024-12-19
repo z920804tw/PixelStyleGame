@@ -1225,7 +1225,7 @@ MonoBehaviour:
   enemyHp: 100
   walkPointRange: 10
   defaultSight: 5
-  carSight: 10
+  carSight: 40
   inSightRange: 0
   inAttackRange: 0
   isEnd: 0

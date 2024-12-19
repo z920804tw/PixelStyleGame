@@ -30,9 +30,9 @@ public class EnemyController : MonoBehaviour
     public float walkPointRange;
 
     //狀態
-    public float defaultSight,carSight;
-    float sightRange,attackRange;
-    
+    public float defaultSight, carSight;
+    float sightRange, attackRange;
+
     public bool inSightRange, inAttackRange;
     bool isDead;
 
@@ -199,6 +199,12 @@ public class EnemyController : MonoBehaviour
                     rb.constraints = RigidbodyConstraints.FreezeAll;
                     col.isTrigger = true;
                     isDead = true;
+
+                    if (GameObject.Find("SceneCanvas").GetComponent<SceneCanvasManager>() != null)
+                    {
+                        GameObject.Find("SceneCanvas").GetComponent<SceneCanvasManager>().killCount++;
+                    }
+
                 }
             }
         }

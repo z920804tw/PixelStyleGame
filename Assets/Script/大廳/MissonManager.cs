@@ -30,7 +30,7 @@ public class MissonManager : MonoBehaviour
     public void OpenQuestCanvas()
     {
         questCanvas.SetActive(true);
-        anim.SetBool("Open", true);
+        // anim.SetBool("Open", true);
         if (playerComponets != null)
         {
             playerComponets.SetActive(false);

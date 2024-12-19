@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 public class SceneCanvasManager : MonoBehaviour
 {
     // Start is called before the first frame update
+    [Header("場景參數")]
+    public int killCount;
     [Header("場景UI物件設定")]
     public GameObject startUI;
     public GameObject gameUI;
@@ -32,6 +34,8 @@ public class SceneCanvasManager : MonoBehaviour
         playerComponet.SetActive(false);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        killCount=0;
     }
 
     // Update is called once per frame
@@ -55,6 +59,7 @@ public class SceneCanvasManager : MonoBehaviour
 
 
         timeCostText.text = $"花費時間{(int)time}秒";
+        kiilCountText.text=$"本次殺敵數量:{killCount}";
         switch (i)
         {
             case 0:
