@@ -8,6 +8,7 @@ public class MissonSelect : MonoBehaviour
     // Start is called before the first frame update
     public GameObject[] missionList;
 
+
     void Start()
     {
 
@@ -18,15 +19,19 @@ public class MissonSelect : MonoBehaviour
     {
 
     }
-    
+
     public void SelectMission(int i)
     {
         CloseAllList();
         missionList[i].SetActive(true);
     }
-    public void StartMission(int i)
+    public void StartMission(string i)
     {
-        SceneManager.LoadScene(i);
+        if (LevelLoadManager.instance != null)
+        {
+            LevelLoadManager.instance.LoadScene(i);
+        }
+
     }
 
     void CloseAllList()

@@ -15,6 +15,7 @@ public class Level3_GameManager : MonoBehaviour
 
     [Header("關卡UI設定")]
     public SceneCanvasManager sceneCM;
+    GameObject playerComponet;
     int endCase;
     bool check;
 
@@ -29,15 +30,16 @@ public class Level3_GameManager : MonoBehaviour
 
     void Start()
     {
+        StartLevel();
         foreach (GameObject i in checkPoints)
         {
             i.SetActive(false);
         }
         checkPoints[checkPointCount].SetActive(true);
         endCase = -1;
-        
         car = GameObject.Find("貨車");
         UpdateQuest(currnetStatus); //預設0
+
     }
 
     // Update is called once per frame
@@ -127,7 +129,15 @@ public class Level3_GameManager : MonoBehaviour
         StopScene();
         sceneCM.EndLevel(i);
     }
-
+    void StartLevel()
+    {
+        sceneCM.endUI.SetActive(false);
+        sceneCM.startUI.SetActive(true);
+        playerComponet = GameObject.Find("Player").GetComponent<PlayerComponets>().PlayerComponet;
+        playerComponet.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
 
     void StopScene()
     {

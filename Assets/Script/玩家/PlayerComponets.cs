@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerComponets : MonoBehaviour
@@ -21,4 +22,6 @@ public class PlayerComponets : MonoBehaviour
     {
         return playerController.isIncar;
     }
+
+
 }

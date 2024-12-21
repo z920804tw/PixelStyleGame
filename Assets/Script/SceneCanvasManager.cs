@@ -13,6 +13,7 @@ public class SceneCanvasManager : MonoBehaviour
     public GameObject startUI;
     public GameObject gameUI;
     public GameObject endUI;
+    public GameObject pauseUI;
     [Header("物件UI參數設定")]
     public TMP_Text endStatusText;
     public TMP_Text timerText;
@@ -21,21 +22,14 @@ public class SceneCanvasManager : MonoBehaviour
 
     public GameObject backBtn;
     public GameObject restartBtn;
-
     GameObject playerComponet;
+    public bool isLobby;
 
     bool isEnd;
     float time;
     void Start()
     {
-        endUI.SetActive(false);
-        startUI.SetActive(true);
-        playerComponet = GameObject.Find("Player").GetComponent<PlayerComponets>().PlayerComponet;
-        playerComponet.SetActive(false);
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
-        killCount=0;
+        killCount = 0;
     }
 
     // Update is called once per frame
@@ -49,6 +43,20 @@ public class SceneCanvasManager : MonoBehaviour
                 timerText.text = $"時間:{(int)time}秒";
             }
         }
+        if (!isEnd && !startUI.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                pauseUI.GetComponent<PauseMenu>().OpenCanvas();
+
+                //判斷是不是在大廳
+                if (!isLobby)
+                {
+                    gameUI.SetActive(false);
+                }
+
+            }
+        }
 
     }
     public void EndLevel(int i)
@@ -59,7 +67,7 @@ public class SceneCanvasManager : MonoBehaviour
 
 
         timeCostText.text = $"花費時間{(int)time}秒";
-        kiilCountText.text=$"本次殺敵數量:{killCount}";
+        kiilCountText.text = $"本次殺敵數量:{killCount}";
         switch (i)
         {
             case 0:
@@ -74,20 +82,20 @@ public class SceneCanvasManager : MonoBehaviour
 
     }
 
-    public void backToLobby()
+    public void LevelSelect(string i)
     {
-        SceneManager.LoadScene(0);
+        if (LevelLoadManager.instance != null)
+        {
+            LevelLoadManager.instance.LoadScene(i);
+        }
+
     }
-    public void RestartLevel()
-    {
-        
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+
     public void StartLevel()
     {
         startUI.SetActive(false);
         gameUI.SetActive(true);
-
+        playerComponet = GameObject.Find("Player").GetComponent<PlayerComponets>().PlayerComponet;
         playerComponet.SetActive(true);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
