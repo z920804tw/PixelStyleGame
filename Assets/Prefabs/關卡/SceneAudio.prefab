@@ -45,8 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d6f15737c1a4be498fde1fec177ab90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 0}
-  bgClip: {fileID: 0}
+  audioMixer: {fileID: 24100000, guid: fe1a43cce36e1914cac2bad2b8005125, type: 2}
+  bgVolSlider: {fileID: 0}
+  enemyVolSlider: {fileID: 0}
+  carVolSlider: {fileID: 0}
 --- !u!82 &2601064285114473045
 AudioSource:
   m_ObjectHideFlags: 0

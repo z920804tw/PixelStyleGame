@@ -50,7 +50,13 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: 641f46a1e45b2114ebaff80f426b0f8b
+    name: BgVolume
+  - guid: ed8a3dcde270d8c45bbe2da53a9b37d4
+    name: CarEngineVolume
+  - guid: a1ef9fb47db4a7448937facaa31747b8
+    name: EnemyVolume
   m_AudioMixerGroupViews:
   - guids:
     - 20aa7a2bddbf82d468b04948ed69d8e2
@@ -108,7 +114,7 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: bed01d394bc5e104ea0054ea14970497
   m_FloatValues:
-    641f46a1e45b2114ebaff80f426b0f8b: 5.3963904
+    641f46a1e45b2114ebaff80f426b0f8b: 4.583314
     a1ef9fb47db4a7448937facaa31747b8: -5.0891695
     71f9f217e0fc6484b8a0da128619b0da: -15.057305
     6cea6c4cd08de9d448a08cd7c8901aa7: -0.3709672

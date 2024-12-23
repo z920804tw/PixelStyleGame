@@ -37,7 +37,7 @@ public class CarController : MonoBehaviour
 
     PlayerInputAction inputActions;
     CarAudioController carAudioController;
-    
+    public bool isPause;
     private void Awake()
     {
         inputActions = new PlayerInputAction();
@@ -46,14 +46,10 @@ public class CarController : MonoBehaviour
     private void OnEnable()
     {
         inputActions.Enable();
-        carAudioController.enabled = true;
-
     }
     private void OnDisable()
     {
         inputActions.Disable();
-        carAudioController.enabled = false;
-
     }
 
 
@@ -74,8 +70,15 @@ public class CarController : MonoBehaviour
     void FixedUpdate()
     {
 
-        CarAcceleration();
-        CarTurnAngel();
+        if (!isPause)
+        {
+            CarAcceleration();
+            CarTurnAngel();
+        }
+        else
+        {
+
+        }
 
 
     }
@@ -100,7 +103,7 @@ public class CarController : MonoBehaviour
 
         frontLeft.steerAngle = currentTurnAngle;
         frontRight.steerAngle = currentTurnAngle;
-        
+
         UpdateWheel(frontLeft, frontLeftWheel);
         UpdateWheel(frontRight, frontRightWheel);
         UpdateWheel(backLeft, backLeftWheel);
@@ -166,7 +169,7 @@ public class CarController : MonoBehaviour
             }
             else
             {
-                
+
                 carAudioController.PlaySound(1);
             }
         }

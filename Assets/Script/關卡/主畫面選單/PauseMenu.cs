@@ -6,7 +6,8 @@ public class PauseMenu : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public GameObject pauseCanvas;
+    public GameObject mainCanvas;
+    public GameObject settingCanvas;
     public SceneCanvasManager sceneCanvasManager;
     bool isIncar;
 
@@ -24,11 +25,12 @@ public class PauseMenu : MonoBehaviour
     public void OpenCanvas()
     {
         sceneCanvasManager.pauseUI.SetActive(true);
+        BackMain();
         isIncar = GameObject.Find("Player").GetComponent<PlayerComponets>().isInCar();
         if (isIncar)
         {
             GameObject.Find("貨車").GetComponent<CarSetting>().enabled = false;
-            GameObject.Find("貨車").GetComponent<CarController>().enabled = false;
+            GameObject.Find("貨車").GetComponent<CarController>().isPause=true;
         }
         else
         {
@@ -44,7 +46,7 @@ public class PauseMenu : MonoBehaviour
         if (isIncar)
         {
             GameObject.Find("貨車").GetComponent<CarSetting>().enabled = true;
-            GameObject.Find("貨車").GetComponent<CarController>().enabled = true;
+            GameObject.Find("貨車").GetComponent<CarController>().isPause=false;
         }
         else
         {
@@ -67,5 +69,18 @@ public class PauseMenu : MonoBehaviour
         {
             LevelLoadManager.instance.LoadScene(i);
         }
+    }
+
+    public void OpenSetting()
+    {
+        mainCanvas.SetActive(false);
+        settingCanvas.SetActive(true);
+    }
+
+    public void BackMain()
+    {
+        mainCanvas.SetActive(true);
+        settingCanvas.SetActive(false);
+        
     }
 }

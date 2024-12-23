@@ -53,6 +53,10 @@ public class MenuSelect : MonoBehaviour
         }
 
     }
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 
 
 }

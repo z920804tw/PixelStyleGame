@@ -12,6 +12,7 @@ public class CarSetting : MonoBehaviour
     public GameObject player;
     GameObject playerComponent;
     PlayerController playerController;
+    CarAudioController carAudioController;
     Camera carCam;
 
     CarController carController;
@@ -31,6 +32,7 @@ public class CarSetting : MonoBehaviour
     Collider playerCol;
     Rigidbody rb;
     public bool inTheCar = false;
+   
 
 
     float xRotation;
@@ -43,6 +45,7 @@ public class CarSetting : MonoBehaviour
 
 
         carController = GetComponent<CarController>();
+        carAudioController = GetComponent<CarAudioController>();
         carCols = GetComponents<Collider>();
 
         rb = GetComponent<Rigidbody>();
@@ -76,7 +79,7 @@ public class CarSetting : MonoBehaviour
 
                 carCam.transform.localRotation = Quaternion.Euler(0, 0, 0);  //攝影機歸位
                 carController.enabled = true;       //汽車操控打開
-                
+                carAudioController.enabled=true;
 
 
 
@@ -110,7 +113,7 @@ public class CarSetting : MonoBehaviour
 
 
                     carController.enabled = false;
-
+                    carAudioController.enabled=false;
                 }
             }
 
