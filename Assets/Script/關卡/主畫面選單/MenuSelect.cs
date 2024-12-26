@@ -9,6 +9,7 @@ public class MenuSelect : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject[] Menus;
+    
 
     void Start()
     {
@@ -33,6 +34,9 @@ public class MenuSelect : MonoBehaviour
             case 1:
                 Menus[1].SetActive(true);
                 break;
+            case 2:
+                Menus[2].SetActive(true);
+            break;
 
         }
     }

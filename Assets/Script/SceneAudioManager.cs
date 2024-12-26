@@ -18,16 +18,16 @@ public class SceneAudioManager : MonoBehaviour
     [SerializeField] TMP_Text carVolText;
     private void Start()
     {
-        if (PlayerPrefs.HasKey("BgVolume"))
+        if (PlayerPrefs.HasKey("Initialization")) //判斷有沒有初始化過
         {
             LoadVolume();
+            Debug.Log("讀取");
         }
         else
         {
-            SetBgVolume();
-            SetEnemyVolume();
-            SetCarVolume();
+            Debug.Log("讀取失敗");
         }
+
     }
 
 
@@ -35,10 +35,10 @@ public class SceneAudioManager : MonoBehaviour
     {
         float volume = bgVolSlider.value;
         audioMixer.SetFloat("BgVolume", Mathf.Log10(volume) * 20);
-
-
+ 
         bgVolText.text = $"{Mathf.RoundToInt(volume * 100)}";
         PlayerPrefs.SetFloat("BgVolume", volume);
+        Debug.Log("設定好背景音量");
     }
     public void SetEnemyVolume()
     {
